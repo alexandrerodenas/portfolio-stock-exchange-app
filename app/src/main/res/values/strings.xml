@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Portfolio</string>
+    <string name="open_positions">Portefeuille</string>
+    <string name="cours">Cours</string>
+    <string name="cours_format">%1$.2f€</string>
+    <string name="quantity">Quantité</string>
+    <string name="times">x</string>
+    <string name="equal">=</string>
+    <string name="estimation">Estimation</string>
+    <string name="estimation_format">%1$.2f€</string>
+    <string name="plusminusvalue">+/- Value</string>
+    <string name="plusminusvalue_format">%1$.2f€</string>
+    <string name="percentage_format">(%1$.2f%%)</string>
+    <string name="buyprice">Prix achat</string>
+    <string name="buyprice_format">%1$.2f€</string>
+</resources>
