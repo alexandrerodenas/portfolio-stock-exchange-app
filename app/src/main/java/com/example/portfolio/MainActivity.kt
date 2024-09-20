@@ -8,29 +8,29 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
-import com.example.portfolio.application.StaticPositionRepository
-import com.example.portfolio.domain.EvaluatedPosition
+import com.example.portfolio.application.StaticPortfolioRepository
+import com.example.portfolio.domain.Portfolio
 import com.example.portfolio.ui.activity.PositionsActivity
 import kotlinx.coroutines.launch
+import java.util.Optional
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val positionRepository = StaticPositionRepository.createFromResources(this)
-        var evaluatedPositions: List<EvaluatedPosition> = emptyList()
+        val positionRepository = StaticPortfolioRepository.createFromResources(this)
+        var portfolio: Portfolio? = null
+        val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
 
         lifecycleScope.launch {
-            evaluatedPositions = positionRepository.getEvaluatedPositions()
-
+            portfolio = positionRepository.getPortfolio()
         }
 
-        val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
         openPositionsButton.setOnClickListener {
-            if (evaluatedPositions.isNotEmpty()) {
+            if (portfolio != null) {
                 val intent = Intent(this, PositionsActivity::class.java).apply {
-                    putParcelableArrayListExtra("evaluatedPositions", ArrayList(evaluatedPositions))
+                    putExtra("portfolio", portfolio)
                 }
                 startActivity(intent)
             } else {

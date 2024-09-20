@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDateTime
 
-class StaticPositionRepositoryTest {
+class StaticPortfolioRepositoryTest {
 
     @Test
     fun `Can get positions`() = runBlocking {
@@ -24,9 +24,9 @@ class StaticPositionRepositoryTest {
                     buy: 105.98
                     date: 06/08/2024
         """.trimIndent()
-        val staticPositionRepository = StaticPositionRepository(yaml, FakeStockApiClient())
+        val staticPositionRepository = StaticPortfolioRepository(yaml, FakeStockApiClient())
 
-        val evaluatedPositions = staticPositionRepository.getEvaluatedPositions()
+        val portfolio = staticPositionRepository.getPortfolio()
 
         assertEquals(
             listOf(
@@ -35,7 +35,7 @@ class StaticPositionRepositoryTest {
                         stock = Stock.SANOFI,
                         number = 1,
                         date = LocalDateTime.of(2024, 9, 3, 0, 0),
-                        buy = 104.85f
+                        buy = 104.85
                     ),
                     currentPrice = 0.0
                 ),
@@ -44,12 +44,12 @@ class StaticPositionRepositoryTest {
                         stock = Stock.ATOS,
                         number = 120,
                         date = LocalDateTime.of(2024, 8, 6, 0, 0),
-                        buy = 105.98f
+                        buy = 105.98
                     ),
                     currentPrice = 0.0
                 )
             ),
-            evaluatedPositions
+            portfolio
         )
 
     }

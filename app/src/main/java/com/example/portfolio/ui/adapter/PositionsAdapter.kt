@@ -44,7 +44,7 @@ class PositionAdapter(
         val estimation = currentItem.currentPrice * currentItem.position.number.toFloat()
         holder.estimationValue.text = holder.itemView.context.getString(R.string.estimation_format, estimation)
 
-        // Set the buy price (prix achat)
+        // Set the buy price
         holder.buyPriceValue.text = holder.itemView.context.getString(R.string.buyprice_format, currentItem.position.buy)
 
         // Calculate and set the +/- value (current estimation - buy price)

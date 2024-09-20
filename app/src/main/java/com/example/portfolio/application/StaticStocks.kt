@@ -27,7 +27,7 @@ data class StockData @JsonCreator constructor(
         return Position(
             stock = Stock.valueOf(name.uppercase()),
             number = this.number,
-            buy = this.buy,
+            buy = this.buy.toDouble(),
             date = LocalDate.parse(this.date, formatter).atStartOfDay()
         )
     }

@@ -13,4 +13,5 @@
     <string name="percentage_format">(%1$.2f%%)</string>
     <string name="buyprice">Prix achat</string>
     <string name="buyprice_format">%1$.2f€</string>
+    <string name="investment">Investissement</string>
 </resources>

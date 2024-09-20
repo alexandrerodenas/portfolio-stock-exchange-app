@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 class Position(
     val stock: Stock,
     val number: Int,
-    val buy: Float,
+    val buy: Double,
     val date: LocalDateTime
 ) : Parcelable {
 

@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
-import com.example.portfolio.domain.EvaluatedPosition
+import com.example.portfolio.domain.Portfolio
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.launch
 
@@ -24,14 +24,16 @@ class PositionsActivity : ComponentActivity() {
         positionsRecyclerView = findViewById(R.id.positionsRecyclerView)
 
         lifecycleScope.launch {
-            val evaluatedPositions: List<EvaluatedPosition>? = intent.getParcelableArrayListExtra(
-                "evaluatedPositions",
-                EvaluatedPosition::class.java
+            val portfolio: Portfolio? = intent.getParcelableExtra(
+                "portfolio",
+                Portfolio::class.java
             )
 
-            // Set up the RecyclerView
             positionsRecyclerView.layoutManager = LinearLayoutManager(this@PositionsActivity)
-            positionsRecyclerView.adapter = PositionAdapter(evaluatedPositions ?: emptyList())
+            portfolio?.let {
+                positionsRecyclerView.adapter =
+                    PositionAdapter(portfolio.evaluatedPositions)
+            }
         }
     }
 }

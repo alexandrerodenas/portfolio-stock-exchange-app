@@ -7,25 +7,26 @@ import com.example.portfolio.R
 import com.example.portfolio.application.network.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
+import com.example.portfolio.domain.Portfolio
 import com.example.portfolio.domain.Position
-import com.example.portfolio.domain.PositionRepository
+import com.example.portfolio.domain.PortfolioRepository
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.InputStream
 
-class StaticPositionRepository(
+class StaticPortfolioRepository(
     private val positionFile: String,
     private val stockApiClient: StockApiClient
-) : PositionRepository {
+) : PortfolioRepository {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override suspend fun getEvaluatedPositions(): List<EvaluatedPosition> {
-        return this.readPositions().map { position: Position ->
+    override suspend fun getPortfolio(): Portfolio {
+        return Portfolio(this.readPositions().map { position: Position ->
             EvaluatedPosition(
                 position = position,
                 currentPrice = stockApiClient.getPriceFromSymbol(position.stock.symbol) ?: 0.0
             )
-        }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,10 +45,10 @@ class StaticPositionRepository(
     }
 
     companion object {
-        fun createFromResources(context: Context): StaticPositionRepository {
+        fun createFromResources(context: Context): StaticPortfolioRepository {
             val inputStream: InputStream = context.resources.openRawResource(R.raw.positions)
             val positionContent = inputStream.bufferedReader().use { it.readText() }
-            return StaticPositionRepository(positionContent, YahooApiClient())
+            return StaticPortfolioRepository(positionContent, YahooApiClient())
         }
     }
 }
