@@ -9,7 +9,7 @@ data class Portfolio(
 ) : Parcelable {
     fun getTotalEstimation(): Double {
         return this.evaluatedPositions.sumOf {
-            evaluatedPosition: EvaluatedPosition -> evaluatedPosition.currentPrice
+            evaluatedPosition: EvaluatedPosition -> evaluatedPosition.currentPrice * evaluatedPosition.position.number
         }
     }
 

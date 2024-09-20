@@ -35,21 +35,21 @@ class PositionAdapter(
         holder.stockTitle.text = currentItem.position.stock.name
 
         // Set the course value (current price)
-        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.cours_format, currentItem.currentPrice)
+        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.currentPrice)
 
         // Set the quantity value (number of stocks)
         holder.quantityValue.text = currentItem.position.number.toString()
 
         // Set the estimation value (current price * number of stocks)
         val estimation = currentItem.currentPrice * currentItem.position.number.toFloat()
-        holder.estimationValue.text = holder.itemView.context.getString(R.string.estimation_format, estimation)
+        holder.estimationValue.text = holder.itemView.context.getString(R.string.euro_format, estimation)
 
         // Set the buy price
-        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.buyprice_format, currentItem.position.buy)
+        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.position.buy)
 
         // Calculate and set the +/- value (current estimation - buy price)
         val plusMinusValue = estimation - currentItem.position.buy
-        holder.plusMinusValue.text = holder.itemView.context.getString(R.string.plusminusvalue_format, plusMinusValue)
+        holder.plusMinusValue.text = holder.itemView.context.getString(R.string.euro_format, plusMinusValue)
 
         val plusMinusPercentage = plusMinusValue / estimation * 100
         holder.plusMinusPercentage.text = holder.itemView.context.getString(R.string.percentage_format, plusMinusPercentage)
