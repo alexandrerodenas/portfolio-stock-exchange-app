@@ -1,9 +1,13 @@
 package com.example.portfolio.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 class EvaluatedPosition(
     val position: Position,
     val currentPrice: Double
-){
+): Parcelable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
 import com.example.portfolio.domain.EvaluatedPosition
 
-// Adapter class for Position items
 class PositionAdapter(
     private val positions: List<EvaluatedPosition>
 ) : RecyclerView.Adapter<PositionAdapter.PositionViewHolder>() {
 
-    // ViewHolder class to represent each item in the RecyclerView
     class PositionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val stockTitle: TextView = itemView.findViewById(R.id.stockTitle)
         val currentPriceValue: TextView = itemView.findViewById(R.id.currentPriceValue)

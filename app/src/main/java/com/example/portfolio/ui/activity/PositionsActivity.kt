@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
-import com.example.portfolio.application.StaticPositionRepository
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.launch
@@ -16,26 +15,23 @@ import kotlinx.coroutines.launch
 class PositionsActivity : ComponentActivity() {
 
     private lateinit var positionsRecyclerView: RecyclerView
-    private lateinit var positionRepository: StaticPositionRepository
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
 
         positionsRecyclerView = findViewById(R.id.positionsRecyclerView)
 
-        // Create the repository using the static method
-        positionRepository = StaticPositionRepository.createFromResources(this)
-
-        // Launch a coroutine to fetch the evaluated positions
         lifecycleScope.launch {
-            // Fetch evaluated positions asynchronously
-            val evaluatedPositions: List<EvaluatedPosition> = positionRepository.getEvaluatedPositions()
+            val evaluatedPositions: List<EvaluatedPosition>? = intent.getParcelableArrayListExtra(
+                "evaluatedPositions",
+                EvaluatedPosition::class.java
+            )
 
             // Set up the RecyclerView
             positionsRecyclerView.layoutManager = LinearLayoutManager(this@PositionsActivity)
-            positionsRecyclerView.adapter = PositionAdapter(evaluatedPositions)
+            positionsRecyclerView.adapter = PositionAdapter(evaluatedPositions ?: emptyList())
         }
     }
 }

@@ -1,15 +1,18 @@
 package com.example.portfolio.domain
 
 import android.os.Build
+import android.os.Parcelable
 import androidx.annotation.RequiresApi
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
+@Parcelize
 class Position(
     val stock: Stock,
     val number: Int,
     val buy: Float,
     val date: LocalDateTime
-) {
+) : Parcelable {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun combineWith(other: Position): Position {
