@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.mpandroidchart)
     implementation(libs.androidx.core)
+    implementation("com.google.android.material:material")
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
