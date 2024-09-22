@@ -9,11 +9,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.portfolio.application.ChartRepositoryImpl
 import com.example.portfolio.application.StaticPortfolioRepositoryImpl
+import com.example.portfolio.application.network.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
+import com.example.portfolio.domain.Stock
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
-        val chartRepositoryImpl = ChartRepositoryImpl(YahooApiClient())
+        val stockApiClient: StockApiClient = YahooApiClient()
 
 
         var portfolio: Portfolio? = null
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             } ?: run {
                 Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
             }
-            injectChartFragment(chartRepositoryImpl.getCAC40Chart(), "CAC 40")
+            injectChartFragment(stockApiClient.getChartData(Stock.CAC40.symbol), Stock.CAC40.displayName)
         }
 
         openPositionsButton.setOnClickListener {

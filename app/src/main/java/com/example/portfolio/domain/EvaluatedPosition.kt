@@ -9,6 +9,14 @@ class EvaluatedPosition(
     val currentPrice: Double
 ): Parcelable {
 
+    fun getStockName(): String {
+        return this.position.getStockName()
+    }
+
+    fun getStockSymbol(): String {
+        return this.position.getStockSymbol()
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -14,6 +14,15 @@ class Position(
     val date: LocalDateTime
 ) : Parcelable {
 
+
+    fun getStockName(): String {
+        return this.stock.name
+    }
+
+    fun getStockSymbol(): String {
+        return this.stock.symbol
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun combineWith(other: Position): Position {
         val combinedNumber = (this.number + other.number)

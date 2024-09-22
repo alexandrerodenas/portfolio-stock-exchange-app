@@ -1,6 +1,8 @@
 package com.example.portfolio.ui.activity
 
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.portfolio.R
 import com.example.portfolio.ui.fragment.ChartFragment
@@ -8,6 +10,7 @@ import com.github.mikephil.charting.data.Entry
 
 class ChartActivity : AppCompatActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chart)

@@ -14,7 +14,6 @@ class DateValueFormatter(private val timestamps: List<Long>) : ValueFormatter() 
                 else
                     formatTimestampLegacy(timestamp)
             }
-            ?: "N/A"
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun formatTimestamp(timestamp: Long): String =

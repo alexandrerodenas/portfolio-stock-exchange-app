@@ -1,8 +1,10 @@
 package com.example.portfolio.ui.activity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,7 @@ class PositionsActivity : AppCompatActivity() {
 
     private val stockApiClient: StockApiClient = YahooApiClient()
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
@@ -31,10 +34,10 @@ class PositionsActivity : AppCompatActivity() {
         val adapter = PositionAdapter(positions) { evaluatedPosition ->
             lifecycleScope.launch {
                 try {
-                    val chartData = stockApiClient.getChartData(evaluatedPosition.position.stock.symbol)
+                    val chartData = stockApiClient.getChartData(evaluatedPosition.getStockSymbol())
                     val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
                         putParcelableArrayListExtra("chartData", ArrayList(chartData))
-                        putExtra("chartTitle", evaluatedPosition.position.stock.name)
+                        putExtra("chartTitle", evaluatedPosition.getStockName())
                     }
                     startActivity(intent)
                 } catch (e: Exception) {
