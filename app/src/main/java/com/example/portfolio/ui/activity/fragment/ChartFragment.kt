@@ -1,6 +1,6 @@
-package com.example.portfolio.ui.fragment
+package com.example.portfolio.ui.activity.fragment
 
-import DateValueFormatter
+import com.example.portfolio.ui.TimeRangeValueFormatter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -63,9 +63,9 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
 
     private fun XAxis.configureXAxisWithFormatter(timestamps: List<Long>) {
         granularity = 1f
-        valueFormatter = DateValueFormatter(timestamps)
+        valueFormatter = TimeRangeValueFormatter(timestamps)
         position = XAxis.XAxisPosition.BOTTOM
-        labelCount = timestamps.size.coerceAtMost(5)
+        labelCount = timestamps.size
         labelRotationAngle = 45f
     }
 }

@@ -11,4 +11,8 @@ class FakeStockApiClient: StockApiClient {
     override suspend fun getBiweeklyChartData(symbol: String): List<Entry> {
        return emptyList()
     }
+
+    override suspend fun getDailyChartDate(symbol: String): List<Entry> {
+        return emptyList()
+    }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.portfolio.R
-import com.example.portfolio.ui.fragment.ChartFragment
+import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
 
 class ChartActivity : AppCompatActivity() {

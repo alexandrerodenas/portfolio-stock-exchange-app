@@ -16,15 +16,17 @@ import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
 import com.example.portfolio.domain.Stock
 import com.example.portfolio.ui.activity.PositionsActivity
-import com.example.portfolio.ui.fragment.ChartFragment
+import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        "fr".setLocale()
         setContentView(R.layout.activity_main)
 
         val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
@@ -50,9 +52,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 positions = it.evaluatedPositions
             } ?: run {
-                Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT)
+                    .show()
             }
-            injectChartFragment(stockApiClient.getBiweeklyChartData(Stock.CAC40.symbol), Stock.CAC40.displayName)
+            injectChartFragment(
+                stockApiClient.getBiweeklyChartData(Stock.CAC40.symbol),
+                Stock.CAC40.displayName
+            )
         }
 
         openPositionsButton.setOnClickListener {
@@ -76,5 +82,13 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction()
             .replace(R.id.chartFragmentContainer, chartFragment)
             .commit()
+    }
+
+    private fun String.setLocale() {
+        val locale = Locale(this)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        createConfigurationContext(config)
     }
 }
