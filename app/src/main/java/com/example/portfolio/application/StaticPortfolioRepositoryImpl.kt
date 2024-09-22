@@ -14,7 +14,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.InputStream
 
-class StaticPortfolioRepository(
+class StaticPortfolioRepositoryImpl(
     private val positionFile: String,
     private val stockApiClient: StockApiClient
 ) : PortfolioRepository {
@@ -45,10 +45,10 @@ class StaticPortfolioRepository(
     }
 
     companion object {
-        fun createFromResources(context: Context): StaticPortfolioRepository {
+        fun createFromResources(context: Context): StaticPortfolioRepositoryImpl {
             val inputStream: InputStream = context.resources.openRawResource(R.raw.positions)
             val positionContent = inputStream.bufferedReader().use { it.readText() }
-            return StaticPortfolioRepository(positionContent, YahooApiClient())
+            return StaticPortfolioRepositoryImpl(positionContent, YahooApiClient())
         }
     }
 }

@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDateTime
 
-class StaticPortfolioRepositoryTest {
+class StaticPortfolioRepositoryImplTest {
 
     @Test
     fun `Can get positions`() = runBlocking {
@@ -24,7 +24,7 @@ class StaticPortfolioRepositoryTest {
                     buy: 105.98
                     date: 06/08/2024
         """.trimIndent()
-        val staticPositionRepository = StaticPortfolioRepository(yaml, FakeStockApiClient())
+        val staticPositionRepository = StaticPortfolioRepositoryImpl(yaml, FakeStockApiClient())
 
         val portfolio = staticPositionRepository.getPortfolio()
 
