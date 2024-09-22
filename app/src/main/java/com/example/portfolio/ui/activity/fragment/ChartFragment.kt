@@ -54,7 +54,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
                 chart.legend.isEnabled = false
                 chart.setExtraOffsets(0f, 0f, 0f, 20f)
                 chart.xAxis.configureXAxisWithFormatter(timestamps)
-                chart.invalidate() // Refresh chart
+                chart.invalidate()
             }
         } else {
             Toast.makeText(requireContext(), "Failed to load chart data", Toast.LENGTH_SHORT).show()

@@ -31,9 +31,26 @@ class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo
         }
     }
 
-    override suspend fun getChartData(symbol: String): List<Entry> {
+    override suspend fun getBiweeklyChartData(symbol: String): List<Entry> {
+        return getChartData(symbol, "15d", "1d")
+    }
+
+    override suspend fun getDailyChartDate(symbol: String): List<Entry> {
+        return getChartData(symbol, "1d", "30m")
+    }
+
+    private suspend fun getChartData(
+        symbol: String,
+        timeRange: String,
+        timeInterval: String
+    ): List<Entry> {
         return try {
-            val response = api.getStockPriceWithRange(symbol, range = "15d", interval = "1d")
+            val response = api.getStockPriceWithRange(
+                symbol,
+                range = timeRange,
+                interval = timeInterval
+            )
+
             val chartResult = response.chart.result[0]
 
             val timestamps = chartResult.timestamp
@@ -49,6 +66,7 @@ class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo
         } catch (e: Exception) {
             emptyList()
         }
+
     }
 
     private interface YahooFinanceApi {
@@ -63,29 +81,29 @@ class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo
         ): YahooFinanceResponse
     }
 
-    data class YahooFinanceResponse(
+    private data class YahooFinanceResponse(
         val chart: Chart
     )
 
-    data class Chart(
+    private data class Chart(
         val result: List<Result>
     )
 
-    data class Result(
+    private data class Result(
         val meta: Meta,
         val timestamp: List<Long>,
         val indicators: Indicators
     )
 
-    data class Meta(
+    private data class Meta(
         val regularMarketPrice: Double
     )
 
-    data class Indicators(
+    private data class Indicators(
         val quote: List<Quote>
     )
 
-    data class Quote(
+    private data class Quote(
         val close: List<Double>
     )
 }

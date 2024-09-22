@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             } ?: run {
                 Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
             }
-            injectChartFragment(stockApiClient.getChartData(Stock.CAC40.symbol), Stock.CAC40.displayName)
+            injectChartFragment(stockApiClient.getBiweeklyChartData(Stock.CAC40.symbol), Stock.CAC40.displayName)
         }
 
         openPositionsButton.setOnClickListener {

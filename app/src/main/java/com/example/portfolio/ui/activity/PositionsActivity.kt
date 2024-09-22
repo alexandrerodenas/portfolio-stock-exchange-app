@@ -34,7 +34,7 @@ class PositionsActivity : AppCompatActivity() {
         val adapter = PositionAdapter(positions) { evaluatedPosition ->
             lifecycleScope.launch {
                 try {
-                    val chartData = stockApiClient.getChartData(evaluatedPosition.getStockSymbol())
+                    val chartData = stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
                     val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
                         putParcelableArrayListExtra("chartData", ArrayList(chartData))
                         putExtra("chartTitle", evaluatedPosition.getStockName())
