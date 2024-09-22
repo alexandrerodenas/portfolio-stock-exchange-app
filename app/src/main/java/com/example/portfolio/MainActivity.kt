@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
         val investmentValue: TextView = findViewById(R.id.investmentValue)
         val estimationValue: TextView = findViewById(R.id.estimationValue)
+        val pendingPlusMinusValue: TextView = findViewById(R.id.pendingPlusMinusValue)
 
         var positions: List<EvaluatedPosition> = emptyList()
 
@@ -45,10 +46,11 @@ class MainActivity : AppCompatActivity() {
             portfolio?.let {
                 investmentValue.text = getString(R.string.euro_format, it.getTotalInvestment())
                 estimationValue.text = getString(R.string.euro_format, it.getTotalEstimation())
+                pendingPlusMinusValue.text = getString(R.string.euro_format, it.getPendingPlusMinusValue())
                 if (it.getTotalInvestment() <= it.getTotalEstimation()) {
-                    investmentValue.setTextColor(getColor(android.R.color.holo_green_dark))
+                    pendingPlusMinusValue.setTextColor(getColor(android.R.color.holo_green_dark))
                 } else {
-                    investmentValue.setTextColor(getColor(android.R.color.holo_red_dark))
+                    pendingPlusMinusValue.setTextColor(getColor(android.R.color.holo_red_dark))
                 }
                 positions = it.evaluatedPositions
             } ?: run {

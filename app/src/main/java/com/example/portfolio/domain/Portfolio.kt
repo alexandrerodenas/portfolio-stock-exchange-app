@@ -18,4 +18,8 @@ data class Portfolio(
                 evaluatedPosition: EvaluatedPosition -> evaluatedPosition.position.buy
         }
     }
+
+    fun getPendingPlusMinusValue(): Double {
+        return this.getTotalEstimation() - this.getTotalInvestment()
+    }
 }
