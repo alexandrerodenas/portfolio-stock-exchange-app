@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
-        val caC40Repository = ChartRepositoryImpl(YahooApiClient())
+        val chartRepositoryImpl = ChartRepositoryImpl(YahooApiClient())
 
 
         var portfolio: Portfolio? = null
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             } ?: run {
                 Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
             }
-            injectChartFragment(caC40Repository.getCAC40Chart(), "CAC 40")
+            injectChartFragment(chartRepositoryImpl.getCAC40Chart(), "CAC 40")
         }
 
         openPositionsButton.setOnClickListener {
@@ -71,9 +71,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun injectChartFragment(chartData: List<Entry>, chartTitle: String) {
         val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
         val chartFragment = ChartFragment.newInstance(ArrayList(chartData), chartTitle)
-        fragmentTransaction.replace(R.id.chartFragmentContainer, chartFragment)
-        fragmentTransaction.commit()
+        fragmentManager.beginTransaction()
+            .replace(R.id.chartFragmentContainer, chartFragment)
+            .commit()
     }
 }

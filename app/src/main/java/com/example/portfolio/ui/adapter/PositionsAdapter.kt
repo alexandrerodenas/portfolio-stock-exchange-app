@@ -9,7 +9,8 @@ import com.example.portfolio.R
 import com.example.portfolio.domain.EvaluatedPosition
 
 class PositionAdapter(
-    private val positions: List<EvaluatedPosition>
+    private val positions: List<EvaluatedPosition>,
+    private val onItemClicked: (EvaluatedPosition) -> Unit
 ) : RecyclerView.Adapter<PositionAdapter.PositionViewHolder>() {
 
     class PositionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,15 +57,18 @@ class PositionAdapter(
 
 
         if (plusMinusValue >= 0) {
-            // Positive or zero: Green color
             holder.plusMinusValue.setTextColor(holder.itemView.context.getColor(android.R.color.holo_green_dark))
             holder.plusMinusPercentage.setTextColor(holder.itemView.context.getColor(android.R.color.holo_green_dark))
         } else {
-            // Negative: Red color
             holder.plusMinusValue.setTextColor(holder.itemView.context.getColor(android.R.color.holo_red_dark))
             holder.plusMinusPercentage.setTextColor(holder.itemView.context.getColor(android.R.color.holo_red_dark))
         }
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(currentItem)
+        }
     }
+
 
     override fun getItemCount(): Int {
         return positions.size

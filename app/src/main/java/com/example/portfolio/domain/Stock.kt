@@ -4,6 +4,7 @@ enum class Stock(
     val displayName: String,
     val symbol: String,
 ) {
+    CAC40("CAC40","^FCHI"),
     SANOFI("Sanofi", "SAN.PA"),
     ACCOR("Accor", "AC.PA"),
     ORANGE("Orange", "ORA.PA"),
