@@ -1,4 +1,7 @@
 <resources>
+    <string name="euro_format">%1$.2f€</string>
+    <string name="percentage_format">(%1$.2f%%)</string>
+
     <string name="app_name">Portfolio</string>
     <string name="open_positions">Portefeuille</string>
     <string name="cours">Cours</string>
@@ -9,7 +12,8 @@
     <string name="plusminusvalue">+/- Value</string>
     <string name="buyprice">Prix achat</string>
     <string name="investment">Investissement</string>
+    <string name="local_values">Mes valeurs locales</string>
+    <string name="foreign_values">Mes valeurs étrangères</string>
 
-    <string name="euro_format">%1$.2f€</string>
-    <string name="percentage_format">(%1$.2f%%)</string>
+
 </resources>

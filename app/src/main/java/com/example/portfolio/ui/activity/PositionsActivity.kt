@@ -25,28 +25,44 @@ class PositionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
 
-        val positionsRecyclerView = findViewById<RecyclerView>(R.id.positionsRecyclerView)
-        val positions = intent.getParcelableArrayListExtra(
+        val localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
+        val foreignPositionsRecyclerView =
+            findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+
+        val (localPositions, foreignPositions) = (intent.getParcelableArrayListExtra(
             "evaluatedPositions",
             EvaluatedPosition::class.java
-        ) ?: listOf()
+        ) ?: listOf()).partition { !it.isForeign() }
 
-        val adapter = PositionAdapter(positions) { evaluatedPosition ->
-            lifecycleScope.launch {
-                try {
-                    val chartData = stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
-                    val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
-                        putParcelableArrayListExtra("chartData", ArrayList(chartData))
-                        putExtra("chartTitle", evaluatedPosition.getStockName())
+        val createAdapter = { positions: List<EvaluatedPosition> ->
+            PositionAdapter(positions) { evaluatedPosition ->
+                lifecycleScope.launch {
+                    try {
+                        val chartData =
+                            stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
+                        val intent =
+                            Intent(this@PositionsActivity, ChartActivity::class.java).apply {
+                                putParcelableArrayListExtra("chartData", ArrayList(chartData))
+                                putExtra("chartTitle", evaluatedPosition.getStockName())
+                            }
+                        startActivity(intent)
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@PositionsActivity,
+                            "Failed to load chart data",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(this@PositionsActivity, "Failed to load chart data", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        positionsRecyclerView.adapter = adapter
-        positionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        localPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        localPositionsRecyclerView.adapter = createAdapter(localPositions)
+        localPositionsRecyclerView.setHasFixedSize(true)
+
+        foreignPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        foreignPositionsRecyclerView.adapter = createAdapter(foreignPositions)
+
     }
 }

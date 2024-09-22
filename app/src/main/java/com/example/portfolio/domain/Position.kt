@@ -23,6 +23,10 @@ class Position(
         return this.stock.symbol
     }
 
+    fun isForeign(): Boolean{
+        return this.stock.isForeign
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun combineWith(other: Position): Position {
         val combinedNumber = (this.number + other.number)
