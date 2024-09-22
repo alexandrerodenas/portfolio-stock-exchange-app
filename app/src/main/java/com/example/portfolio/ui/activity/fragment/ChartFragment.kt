@@ -4,17 +4,21 @@ import com.example.portfolio.ui.TimeRangeValueFormatter
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.ui.text.toLowerCase
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.R
+import com.example.portfolio.R.id.chartStockTitle
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class ChartFragment : Fragment(R.layout.fragment_chart) {
 
@@ -38,12 +42,17 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         super.onViewCreated(view, savedInstanceState)
 
         val chart = view.findViewById<LineChart>(R.id.chart)
+        val title: TextView = view.findViewById(chartStockTitle)
 
         val chartData: ArrayList<Entry>? = arguments?.getParcelableArrayList(
             ARG_CHART_DATA,
             Entry::class.java
         )
         val chartLabel: String? = arguments?.getString(ARG_CHART_LABEL)
+
+        title.text = chartLabel?.let {
+            it.lowercase(Locale.getDefault()).replaceFirstChar { c -> c.uppercase() }
+        } ?: ""
 
         if (chartData != null && chartLabel != null) {
             lifecycleScope.launch {

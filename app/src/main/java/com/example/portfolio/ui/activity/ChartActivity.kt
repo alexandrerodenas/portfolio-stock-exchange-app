@@ -15,11 +15,16 @@ class ChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chart)
 
-        val chartData = intent.getParcelableArrayListExtra("chartData", Entry::class.java) ?: arrayListOf()
-        val chartTitle = intent.getStringExtra("chartTitle") ?: "Chart"
+
+        val chartDataArg =
+            intent.getParcelableArrayListExtra("chartData", Entry::class.java) ?: arrayListOf()
+        val chartTitleArg = intent.getStringExtra("chartTitle") ?: "Chart"
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.chartFragmentContainer, ChartFragment.newInstance(chartData, chartTitle))
+            .replace(
+                R.id.chartFragmentContainer,
+                ChartFragment.newInstance(chartDataArg, chartTitleArg)
+            )
             .commit()
     }
 }
