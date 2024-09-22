@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.portfolio.R
-import com.example.portfolio.application.network.StockApiClient
+import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio

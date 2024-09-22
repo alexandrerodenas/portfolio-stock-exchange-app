@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
-import com.example.portfolio.application.network.StockApiClient
+import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.ui.adapter.PositionAdapter

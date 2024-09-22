@@ -1,5 +1,6 @@
 package com.example.portfolio.application.network
 
+import com.example.portfolio.domain.StockApiClient
 import com.github.mikephil.charting.data.Entry
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,7 +8,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo.com/") : StockApiClient {
+class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo.com/") :
+    StockApiClient {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()

@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.StaticPortfolioRepositoryImpl
-import com.example.portfolio.application.network.StockApiClient
+import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio

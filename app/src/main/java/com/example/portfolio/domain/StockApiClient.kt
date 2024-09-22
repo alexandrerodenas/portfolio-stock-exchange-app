@@ -1,4 +1,4 @@
-package com.example.portfolio.application.network
+package com.example.portfolio.domain
 
 import com.github.mikephil.charting.data.Entry
 
