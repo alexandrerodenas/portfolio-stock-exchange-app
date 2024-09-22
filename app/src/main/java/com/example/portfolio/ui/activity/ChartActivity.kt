@@ -17,7 +17,7 @@ class ChartActivity : AppCompatActivity() {
 
 
         val chartDataArg =
-            intent.getParcelableArrayListExtra("chartData", Entry::class.java) ?: arrayListOf()
+            intent.getParcelableArrayListExtra<Entry>("chartData") ?: arrayListOf()
         val chartTitleArg = intent.getStringExtra("chartTitle") ?: "Chart"
 
         supportFragmentManager.beginTransaction()

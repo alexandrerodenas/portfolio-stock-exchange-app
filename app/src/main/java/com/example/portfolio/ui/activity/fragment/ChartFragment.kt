@@ -43,10 +43,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         val chart = view.findViewById<LineChart>(R.id.chart)
         val title: TextView = view.findViewById(chartStockTitle)
 
-        val chartData: ArrayList<Entry>? = arguments?.getParcelableArrayList(
-            ARG_CHART_DATA,
-            Entry::class.java
-        )
+        val chartData: ArrayList<Entry>? = arguments?.getParcelableArrayList(ARG_CHART_DATA)
         val chartLabel: String? = arguments?.getString(ARG_CHART_LABEL)
 
         title.text = chartLabel?.let {

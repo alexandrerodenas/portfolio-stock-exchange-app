@@ -29,9 +29,8 @@ class PositionsActivity : AppCompatActivity() {
         val foreignPositionsRecyclerView =
             findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
 
-        val (localPositions, foreignPositions) = (intent.getParcelableArrayListExtra(
-            "evaluatedPositions",
-            EvaluatedPosition::class.java
+        val (localPositions, foreignPositions) = (intent.getParcelableArrayListExtra<EvaluatedPosition>(
+            "evaluatedPositions"
         ) ?: listOf()).partition { !it.isForeign() }
 
         val createAdapter = { positions: List<EvaluatedPosition> ->
