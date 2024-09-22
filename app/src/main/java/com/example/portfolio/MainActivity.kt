@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
-import com.example.portfolio.application.CAC40RepositoryImpl
+import com.example.portfolio.application.ChartRepositoryImpl
 import com.example.portfolio.application.StaticPortfolioRepository
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.EvaluatedPosition
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val portfolioRepository = StaticPortfolioRepository.createFromResources(this)
-        val caC40Repository = CAC40RepositoryImpl(YahooApiClient())
+        val caC40Repository = ChartRepositoryImpl(YahooApiClient())
         var portfolio: Portfolio? = null
         val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
         val investmentValue: TextView = findViewById(R.id.investmentValue)

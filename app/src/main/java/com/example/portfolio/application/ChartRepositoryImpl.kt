@@ -1,12 +1,12 @@
 package com.example.portfolio.application
 
 import com.example.portfolio.application.network.StockApiClient
-import com.example.portfolio.domain.CAC40Repository
+import com.example.portfolio.domain.ChartRepository
 import com.github.mikephil.charting.data.Entry
 
-class CAC40RepositoryImpl(
+class ChartRepositoryImpl(
     private val stockApiClient: StockApiClient
-): CAC40Repository {
+): ChartRepository {
 
     private val symbol = "^FCHI"
 
