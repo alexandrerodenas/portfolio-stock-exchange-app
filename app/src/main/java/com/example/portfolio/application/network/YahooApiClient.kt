@@ -53,16 +53,12 @@ class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo
 
             val chartResult = response.chart.result[0]
 
-            val timestamps = chartResult.timestamp
-            val closePrices = chartResult.indicators.quote[0].close
-
-            val entries = mutableListOf<Entry>()
-            for (i in timestamps.indices) {
-                val time = timestamps[i].toFloat()
-                val closePrice = closePrices[i].toFloat()
-                entries.add(Entry(time, closePrice))
+            chartResult.timestamp.indices.map { index ->
+                Entry(
+                    chartResult.timestamp[index].toFloat(),
+                    chartResult.indicators.quote[0].close[index].toFloat()
+                )
             }
-            entries
         } catch (e: Exception) {
             emptyList()
         }
