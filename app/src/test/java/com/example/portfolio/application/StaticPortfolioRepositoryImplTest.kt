@@ -3,7 +3,7 @@ package com.example.portfolio.application
 import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Position
-import com.example.portfolio.domain.Stock
+import com.example.portfolio.domain.StockLegacy
 import com.example.portfolio.network.FakeStockApiClient
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -33,7 +33,7 @@ class StaticPortfolioRepositoryImplTest {
             listOf(
                 EvaluatedPosition(
                     position = Position(
-                        stock = Stock.SANOFI,
+                        stockLegacy = StockLegacy.SANOFI,
                         number = 1,
                         date = LocalDateTime.of(2024, 9, 3, 0, 0),
                         buy = 104.85
@@ -42,7 +42,7 @@ class StaticPortfolioRepositoryImplTest {
                 ),
                 EvaluatedPosition(
                     position = Position(
-                        stock = Stock.ATOS,
+                        stockLegacy = StockLegacy.ATOS,
                         number = 120,
                         date = LocalDateTime.of(2024, 8, 6, 0, 0),
                         buy = 105.98

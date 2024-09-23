@@ -33,7 +33,7 @@ class PositionAdapter(
         val currentItem = positions[position]
 
         // Set the stock title
-        holder.stockTitle.text = currentItem.position.stock.name
+        holder.stockTitle.text = currentItem.position.stockLegacy.name
 
         // Set the course value (current price)
         holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.currentPrice)

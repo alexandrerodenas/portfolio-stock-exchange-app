@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.biometric.AuthenticatorFactory
-import com.example.portfolio.application.biometric.BiometricAuthenticator
 import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
@@ -18,7 +17,7 @@ import com.example.portfolio.database.AppDatabase
 import com.example.portfolio.domain.Authenticator
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
-import com.example.portfolio.domain.Stock
+import com.example.portfolio.domain.StockLegacy
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
@@ -62,8 +61,8 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
                 injectChartFragment(
-                    stockApiClient.getBiweeklyChartData(Stock.CAC40.symbol),
-                    Stock.CAC40.displayName
+                    stockApiClient.getBiweeklyChartData(StockLegacy.CAC40.symbol),
+                    StockLegacy.CAC40.displayName
                 )
             }
 

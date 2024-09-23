@@ -5,12 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.portfolio.domain.Stock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Stock::class], version = 1)
+@Database(entities = [StockDB::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun stockDao(): StockDao
 
@@ -32,7 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private class StockDatabaseCallback : RoomDatabase.Callback() {
+        private class StockDatabaseCallback : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 // Populate database on a background thread

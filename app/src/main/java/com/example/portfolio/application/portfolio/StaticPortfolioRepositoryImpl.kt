@@ -24,7 +24,7 @@ class StaticPortfolioRepositoryImpl(
         return Portfolio(this.readPositions().map { position: Position ->
             EvaluatedPosition(
                 position = position,
-                currentPrice = stockApiClient.getPriceFromSymbol(position.stock.symbol) ?: 0.0
+                currentPrice = stockApiClient.getPriceFromSymbol(position.stockLegacy.symbol) ?: 0.0
             )
         })
     }
@@ -37,11 +37,11 @@ class StaticPortfolioRepositoryImpl(
 
         return staticStocks.stocks.flatMap { (name, stockDataList) ->
             stockDataList.map { data -> data.mapToPosition(name) }
-        }.groupBy { it.stock.name }
+        }.groupBy { it.stockLegacy.name }
             .map { (_, positions) ->
                 positions.reduce { acc, position -> acc.combineWith(position) }
             }
-            .sortedBy { it.stock.name }
+            .sortedBy { it.stockLegacy.name }
     }
 
     companion object {

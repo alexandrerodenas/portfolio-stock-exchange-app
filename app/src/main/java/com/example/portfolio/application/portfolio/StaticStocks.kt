@@ -3,7 +3,7 @@ package com.example.portfolio.application.portfolio
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.portfolio.domain.Position
-import com.example.portfolio.domain.Stock
+import com.example.portfolio.domain.StockLegacy
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
@@ -25,7 +25,7 @@ data class StockData @JsonCreator constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun mapToPosition(name: String): Position {
         return Position(
-            stock = Stock.valueOf(name.uppercase()),
+            stockLegacy = StockLegacy.valueOf(name.uppercase()),
             number = this.number,
             buy = this.buy.toDouble(),
             date = LocalDate.parse(this.date, formatter).atStartOfDay()

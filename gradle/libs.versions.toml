@@ -11,10 +11,10 @@ junitVersion = "1.2.1"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
-composeBom = "2024.04.01"
+composeBom = "2024.09.02"
 junitJupiter = "5.8.1"
 appcompat = "1.7.0"
-material = "1.10.0"
+material = "1.12.0"
 activity = "1.9.2"
 constraintlayout = "2.1.4"
 mpandroidchart = "v3.1.0"
@@ -28,6 +28,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-room-compiler = { module = "androidx.room:room-compiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx" }
+androidx-room-room-compiler = { module = "androidx.room:room-compiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime" }
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }

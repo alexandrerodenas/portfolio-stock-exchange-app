@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Parcelize
 class Position(
-    val stock: Stock,
+    val stockLegacy: StockLegacy,
     val number: Int,
     val buy: Double,
     val date: LocalDateTime
@@ -16,15 +16,15 @@ class Position(
 
 
     fun getStockName(): String {
-        return this.stock.name
+        return this.stockLegacy.name
     }
 
     fun getStockSymbol(): String {
-        return this.stock.symbol
+        return this.stockLegacy.symbol
     }
 
     fun isForeign(): Boolean{
-        return this.stock.isForeign
+        return this.stockLegacy.isForeign
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +33,7 @@ class Position(
         val combinedBuy = (this.buy + other.buy)
         val latestDate = if (this.date.isAfter(other.date)) this.date else other.date
 
-        return Position(stock, combinedNumber, combinedBuy, latestDate)
+        return Position(stockLegacy, combinedNumber, combinedBuy, latestDate)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -42,7 +42,7 @@ class Position(
 
         other as Position
 
-        if (stock != other.stock) return false
+        if (stockLegacy != other.stockLegacy) return false
         if (number != other.number) return false
         if (buy != other.buy) return false
         if (date != other.date) return false
@@ -51,7 +51,7 @@ class Position(
     }
 
     override fun hashCode(): Int {
-        var result = stock.hashCode()
+        var result = stockLegacy.hashCode()
         result = 31 * result + number.hashCode()
         result = 31 * result + buy.hashCode()
         result = 31 * result + date.hashCode()

@@ -1,6 +1,6 @@
 package com.example.portfolio.domain
 
-enum class Stock(
+enum class StockLegacy(
     val displayName: String,
     val symbol: String,
     val isForeign: Boolean
