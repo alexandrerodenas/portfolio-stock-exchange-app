@@ -61,6 +61,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
                 chart.xAxis.configureXAxisWithFormatter(timestamps)
                 chart.axisRight.isEnabled = false
                 chart.xAxis.setDrawGridLines(false)
+                chart.description.isEnabled = false;
                 chart.invalidate()
             }
         } else {
