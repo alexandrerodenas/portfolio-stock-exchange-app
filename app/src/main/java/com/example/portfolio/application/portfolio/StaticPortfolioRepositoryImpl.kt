@@ -1,4 +1,4 @@
-package com.example.portfolio.application
+package com.example.portfolio.application.portfolio
 
 import android.content.Context
 import android.os.Build

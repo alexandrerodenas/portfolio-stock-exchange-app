@@ -36,7 +36,7 @@ class YahooApiClient(private val baseUrl: String = "https://query1.finance.yahoo
     }
 
     override suspend fun getDailyChartDate(symbol: String): List<Entry> {
-        return getChartData(symbol, "1d", "30m")
+        return getChartData(symbol, "1d", "5m")
     }
 
     private suspend fun getChartData(

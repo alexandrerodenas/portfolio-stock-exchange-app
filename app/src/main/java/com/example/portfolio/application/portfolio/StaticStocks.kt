@@ -1,4 +1,4 @@
-package com.example.portfolio.application
+package com.example.portfolio.application.portfolio
 
 import android.os.Build
 import androidx.annotation.RequiresApi

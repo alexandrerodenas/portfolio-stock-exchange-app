@@ -1,5 +1,6 @@
 package com.example.portfolio.application
 
+import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Position
 import com.example.portfolio.domain.Stock

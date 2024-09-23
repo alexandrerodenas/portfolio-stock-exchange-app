@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.0"
+biometric = "1.4.0-alpha02"
 converterGson = "2.9.0"
 jacksonDataformatYaml = "2.14.0"
 jacksonModuleKotlin = "2.14.0"
@@ -20,10 +21,12 @@ mpandroidchart = "v3.1.0"
 recyclerview = "1.3.2"
 retrofit = "2.9.0"
 core = "1.13.1"
+biometricKtx = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 google-material = { module = "com.google.android.material:material" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonDataformatYaml" }

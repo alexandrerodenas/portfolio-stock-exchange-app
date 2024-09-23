@@ -59,6 +59,8 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
                 chart.legend.isEnabled = false
                 chart.setExtraOffsets(0f, 0f, 0f, 20f)
                 chart.xAxis.configureXAxisWithFormatter(timestamps)
+                chart.axisRight.isEnabled = false
+                chart.xAxis.setDrawGridLines(false)
                 chart.invalidate()
             }
         } else {
@@ -67,7 +69,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
     }
 
     private fun XAxis.configureXAxisWithFormatter(timestamps: List<Long>) {
-        granularity = 1f
+        granularity = 5f
         valueFormatter = TimeRangeValueFormatter(timestamps)
         position = XAxis.XAxisPosition.BOTTOM
         labelCount = timestamps.size
