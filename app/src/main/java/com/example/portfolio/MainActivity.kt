@@ -17,21 +17,23 @@ import com.example.portfolio.database.AppDatabase
 import com.example.portfolio.domain.Authenticator
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
-import com.example.portfolio.domain.StockLegacy
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var db: AppDatabase
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         "fr".setLocale()
         setContentView(R.layout.activity_main)
-        AppDatabase.getDatabase(this)
 
         val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
         val stockApiClient: StockApiClient = YahooApiClient()
@@ -44,26 +46,38 @@ class MainActivity : AppCompatActivity() {
 
             var positions: List<EvaluatedPosition> = emptyList()
 
+            db = AppDatabase.getDatabase(this)
+
             lifecycleScope.launch {
-                portfolio = portfolioRepository.getPortfolio()
-                portfolio?.let {
-                    investmentValue.text = getString(R.string.euro_format, it.getTotalInvestment())
-                    estimationValue.text = getString(R.string.euro_format, it.getTotalEstimation())
-                    pendingPlusMinusValue.text = getString(R.string.euro_format, it.getPendingPlusMinusValue())
-                    if (it.getTotalInvestment() <= it.getTotalEstimation()) {
-                        pendingPlusMinusValue.setTextColor(getColor(android.R.color.holo_green_dark))
-                    } else {
-                        pendingPlusMinusValue.setTextColor(getColor(android.R.color.holo_red_dark))
-                    }
-                    positions = it.evaluatedPositions
-                } ?: run {
-                    Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT)
-                        .show()
+                val stocks = withContext(Dispatchers.IO) {
+                    db.stockDao().getAll()
                 }
-                injectChartFragment(
-                    stockApiClient.getBiweeklyChartData(StockLegacy.CAC40.symbol),
-                    StockLegacy.CAC40.displayName
-                )
+
+                portfolio = withContext(Dispatchers.IO) {
+                    portfolioRepository.getPortfolio()
+                }
+
+                // Update UI on the main thread
+                if (portfolio != null) {
+                    investmentValue.text = getString(R.string.euro_format, portfolio!!.getTotalInvestment())
+                    estimationValue.text = getString(R.string.euro_format, portfolio!!.getTotalEstimation())
+                    pendingPlusMinusValue.text = getString(R.string.euro_format, portfolio!!.getPendingPlusMinusValue())
+
+                    pendingPlusMinusValue.setTextColor(
+                        if (portfolio!!.getTotalInvestment() <= portfolio!!.getTotalEstimation())
+                            getColor(android.R.color.holo_green_dark)
+                        else
+                            getColor(android.R.color.holo_red_dark)
+                    )
+
+                    positions = portfolio!!.evaluatedPositions
+                    // Inject chart data only after the portfolio is ready
+                    if (stocks.isNotEmpty()) {
+                        injectChartFragment(stockApiClient.getBiweeklyChartData(stocks[0].symbol), stocks[0].name)
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
+                }
             }
 
             openPositionsButton.setOnClickListener {
@@ -84,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         if (authenticator.isAvailable()) {
             authenticator.authenticate()
         }
+
 
     }
 

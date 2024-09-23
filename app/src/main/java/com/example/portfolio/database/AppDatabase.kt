@@ -34,7 +34,6 @@ abstract class AppDatabase : RoomDatabase() {
         private class StockDatabaseCallback : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                // Populate database on a background thread
                 INSTANCE?.let { database ->
                     CoroutineScope(Dispatchers.IO).launch {
                         populateDatabase(database.stockDao())
@@ -43,20 +42,20 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(stockDao: StockDao) {
-            val stocks = listOf(
-                StockDB("CAC40", "^FCHI", false),
-                StockDB("Sanofi", "SAN.PA", false),
-                StockDB("Accor", "AC.PA", false),
-                StockDB("Orange", "ORA.PA", false),
-                StockDB("BNP", "BNP.PA", false),
-                StockDB("Stellantis", "STLAP.PA", true),
-                StockDB("Atos", "ATO.PA", false),
-                StockDB("Ubisoft", "UBI.PA", false),
-                StockDB("Renault", "RNO.PA", false),
-                StockDB("IShares", "WPEA.PA", true)
-            )
 
+        private suspend fun populateDatabase(stockDao: StockDao) {
+            val stocks = listOf(
+                StockDB("^FCHI", "CAC40", false),
+                StockDB("SAN.PA", "Sanofi", false),
+                StockDB("AC.PA", "Accor", false),
+                StockDB("ORA.PA", "Orange", false),
+                StockDB("BNP.PA", "BNP", false),
+                StockDB("STLAP.PA", "Stellantis", true),
+                StockDB("ATO.PA", "Atos", false),
+                StockDB("UBI.PA", "Ubisoft", false),
+                StockDB("RNO.PA", "Renault", false),
+                StockDB("WPEA.PA", "IShares", true)
+            )
             stockDao.insertStocks(stocks)
         }
     }
