@@ -80,17 +80,17 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.biometric)
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1") // add
-    ksp("com.google.dagger:dagger-compiler:2.51.1") // add
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.dagger.compiler)
 
     // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1") // add
-    implementation("androidx.room:room-ktx:2.6.1")
-    testImplementation("androidx.room:room-testing:2.6.1")
-    implementation("androidx.room:room-paging:2.6.1")
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.androidx.room.room.compiler2)
+    ksp(libs.androidx.room.room.compiler2)
+    implementation(libs.room.ktx)
+    testImplementation(libs.androidx.room.testing)
+    implementation(libs.androidx.room.paging)
 
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
