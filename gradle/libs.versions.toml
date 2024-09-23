@@ -1,19 +1,19 @@
 [versions]
-agp = "8.6.0"
+agp = "8.6.1"
 biometric = "1.4.0-alpha02"
 converterGson = "2.9.0"
 jacksonDataformatYaml = "2.14.0"
 jacksonModuleKotlin = "2.14.0"
 kotlin = "1.9.0"
-coreKtx = "1.10.1"
+coreKtx = "1.13.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
+junitVersion = "1.2.1"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.6.1"
-activityCompose = "1.8.0"
+lifecycleRuntimeKtx = "2.8.6"
+activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 junitJupiter = "5.8.1"
-appcompat = "1.6.1"
+appcompat = "1.7.0"
 material = "1.10.0"
 activity = "1.9.2"
 constraintlayout = "2.1.4"
@@ -21,14 +21,18 @@ mpandroidchart = "v3.1.0"
 recyclerview = "1.3.2"
 retrofit = "2.9.0"
 core = "1.13.1"
-biometricKtx = "1.1.0"
+roomCommon = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-room-compiler = { module = "androidx.room:room-compiler" }
+androidx-room-ktx = { module = "androidx.room:room-ktx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime" }
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 google-material = { module = "com.google.android.material:material" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonDataformatYaml" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -52,6 +56,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+room-compiler = { module = "androidx.room:room-compiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

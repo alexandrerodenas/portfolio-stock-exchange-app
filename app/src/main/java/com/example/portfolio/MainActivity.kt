@@ -14,6 +14,7 @@ import com.example.portfolio.application.biometric.BiometricAuthenticator
 import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
+import com.example.portfolio.database.AppDatabase
 import com.example.portfolio.domain.Authenticator
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         "fr".setLocale()
         setContentView(R.layout.activity_main)
+        AppDatabase.getDatabase(this)
 
         val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
         val stockApiClient: StockApiClient = YahooApiClient()
