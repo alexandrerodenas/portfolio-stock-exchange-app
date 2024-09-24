@@ -4,25 +4,23 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.biometric.AuthenticatorFactory
-import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
-import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
+import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.database.DataDatabase
 import com.example.portfolio.domain.Authenticator
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
+import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
+import com.example.portfolio.ui.activity.fragment.GlobalPlusMinusValueFragment
 import com.github.mikephil.charting.data.Entry
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -39,9 +37,6 @@ class MainActivity : AppCompatActivity() {
         val authenticator: Authenticator = AuthenticatorFactory().provide(this) {
             var portfolio: Portfolio? = null
             val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
-            val investmentValue: TextView = findViewById(R.id.investmentValue)
-            val estimationValue: TextView = findViewById(R.id.estimationValue)
-            val pendingPlusMinusValue: TextView = findViewById(R.id.pendingPlusMinusValue)
 
             var positions: List<EvaluatedPosition> = emptyList()
 
@@ -51,22 +46,7 @@ class MainActivity : AppCompatActivity() {
                 portfolio = portfolioRepository.getPortfolio()
                 db.stockDao().getAll().collect { stocks ->
                     if (portfolio != null) {
-                        investmentValue.text =
-                            getString(R.string.euro_format, portfolio!!.getTotalInvestment())
-                        estimationValue.text =
-                            getString(R.string.euro_format, portfolio!!.getTotalEstimation())
-                        pendingPlusMinusValue.text = getString(
-                            R.string.euro_format,
-                            portfolio!!.getPendingPlusMinusValue()
-                        )
-
-                        pendingPlusMinusValue.setTextColor(
-                            if (portfolio!!.getTotalInvestment() <= portfolio!!.getTotalEstimation())
-                                getColor(android.R.color.holo_green_dark)
-                            else
-                                getColor(android.R.color.holo_red_dark)
-                        )
-
+                        injectGlobalPlusMinusValue(portfolio!!)
                         positions = portfolio!!.evaluatedPositions
 
                         if (stocks.isNotEmpty()) {
@@ -120,9 +100,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun injectChartFragment(chartData: List<Entry>, chartTitle: String) {
         val fragmentManager = supportFragmentManager
-        val chartFragment = ChartFragment.newInstance(ArrayList(chartData), chartTitle)
+        val fragment = ChartFragment.newInstance(ArrayList(chartData), chartTitle)
         fragmentManager.beginTransaction()
-            .replace(R.id.chartFragmentContainer, chartFragment)
+            .replace(R.id.chartFragmentContainer, fragment)
+            .commit()
+    }
+
+    private fun injectGlobalPlusMinusValue(portfolio: Portfolio) {
+        val fragmentManager = supportFragmentManager
+        val fragment = GlobalPlusMinusValueFragment.newInstance(portfolio)
+        fragmentManager.beginTransaction()
+            .replace(R.id.globalPlusMinusValueFragmentContainer, fragment)
             .commit()
     }
 
