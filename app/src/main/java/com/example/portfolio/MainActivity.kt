@@ -13,21 +13,20 @@ import com.example.portfolio.application.biometric.AuthenticatorFactory
 import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.domain.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
-import com.example.portfolio.database.AppDatabase
+import com.example.portfolio.database.DataDatabase
 import com.example.portfolio.domain.Authenticator
 import com.example.portfolio.domain.EvaluatedPosition
 import com.example.portfolio.domain.Portfolio
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.github.mikephil.charting.data.Entry
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var db: AppDatabase
+    private lateinit var db: DataDatabase
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,38 +45,55 @@ class MainActivity : AppCompatActivity() {
 
             var positions: List<EvaluatedPosition> = emptyList()
 
-            db = AppDatabase.getDatabase(this)
+            db = DataDatabase.getInstance(this)
 
             lifecycleScope.launch {
-                val stocks = withContext(Dispatchers.IO) {
-                    db.stockDao().getAll()
-                }
+                portfolio = portfolioRepository.getPortfolio()
+                db.stockDao().getAll().collect { stocks ->
+                    if (portfolio != null) {
+                        investmentValue.text =
+                            getString(R.string.euro_format, portfolio!!.getTotalInvestment())
+                        estimationValue.text =
+                            getString(R.string.euro_format, portfolio!!.getTotalEstimation())
+                        pendingPlusMinusValue.text = getString(
+                            R.string.euro_format,
+                            portfolio!!.getPendingPlusMinusValue()
+                        )
 
-                portfolio = withContext(Dispatchers.IO) {
-                    portfolioRepository.getPortfolio()
-                }
+                        pendingPlusMinusValue.setTextColor(
+                            if (portfolio!!.getTotalInvestment() <= portfolio!!.getTotalEstimation())
+                                getColor(android.R.color.holo_green_dark)
+                            else
+                                getColor(android.R.color.holo_red_dark)
+                        )
 
-                // Update UI on the main thread
-                if (portfolio != null) {
-                    investmentValue.text = getString(R.string.euro_format, portfolio!!.getTotalInvestment())
-                    estimationValue.text = getString(R.string.euro_format, portfolio!!.getTotalEstimation())
-                    pendingPlusMinusValue.text = getString(R.string.euro_format, portfolio!!.getPendingPlusMinusValue())
+                        positions = portfolio!!.evaluatedPositions
 
-                    pendingPlusMinusValue.setTextColor(
-                        if (portfolio!!.getTotalInvestment() <= portfolio!!.getTotalEstimation())
-                            getColor(android.R.color.holo_green_dark)
-                        else
-                            getColor(android.R.color.holo_red_dark)
-                    )
-
-                    positions = portfolio!!.evaluatedPositions
-                    // Inject chart data only after the portfolio is ready
-                    if (stocks.isNotEmpty()) {
-                        injectChartFragment(stockApiClient.getBiweeklyChartData(stocks[0].symbol), stocks[0].name)
+                        if (stocks.isNotEmpty()) {
+                            val cac40Stock = stocks.find { it.name == "CAC40" }
+                            if(cac40Stock == null){
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Failed to load CAC 40",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                injectChartFragment(
+                                    stockApiClient.getBiweeklyChartData(cac40Stock.symbol),
+                                    cac40Stock.name
+                                )
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Failed to load portfolio",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                } else {
-                    Toast.makeText(this@MainActivity, "Failed to load portfolio", Toast.LENGTH_SHORT).show()
                 }
+
+
             }
 
             openPositionsButton.setOnClickListener {
