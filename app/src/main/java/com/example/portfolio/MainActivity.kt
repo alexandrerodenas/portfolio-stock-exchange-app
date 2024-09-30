@@ -19,6 +19,7 @@ import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.example.portfolio.ui.activity.fragment.GlobalPlusMinusValueFragment
+import com.example.portfolio.ui.activity.fragment.TopFlopFragment
 import com.github.mikephil.charting.data.Entry
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                                     stockApiClient.getBiweeklyChartData(cac40Stock.symbol),
                                     cac40Stock.name
                                 )
+                                injectTopFlopFragment(portfolio)
                             }
                         }
                     }
@@ -108,6 +110,14 @@ class MainActivity : AppCompatActivity() {
         val fragment = GlobalPlusMinusValueFragment.newInstance(portfolio)
         fragmentManager.beginTransaction()
             .replace(R.id.globalPlusMinusValueFragmentContainer, fragment)
+            .commit()
+    }
+
+    private fun injectTopFlopFragment(portfolio: Portfolio) {
+        val fragmentManager = supportFragmentManager
+        val topFlopFragment = TopFlopFragment.newInstance(portfolio)
+        fragmentManager.beginTransaction()
+            .replace(R.id.topFlopFragmentContainer, topFlopFragment)
             .commit()
     }
 

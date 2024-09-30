@@ -9,7 +9,7 @@ import com.example.portfolio.R
 import com.example.portfolio.domain.model.EvaluatedPosition
 
 class PositionAdapter(
-    private val positions: List<EvaluatedPosition>,
+    private val evaluatedPositions: List<EvaluatedPosition>,
     private val onItemClicked: (EvaluatedPosition) -> Unit
 ) : RecyclerView.Adapter<PositionAdapter.PositionViewHolder>() {
 
@@ -30,7 +30,7 @@ class PositionAdapter(
     }
 
     override fun onBindViewHolder(holder: PositionViewHolder, position: Int) {
-        val currentItem = positions[position]
+        val currentItem = evaluatedPositions[position]
 
         // Set the stock title
         holder.stockTitle.text = currentItem.position.stock.name
@@ -42,17 +42,17 @@ class PositionAdapter(
         holder.quantityValue.text = currentItem.position.number.toString()
 
         // Set the estimation value (current price * number of stocks)
-        val estimation = currentItem.currentPrice * currentItem.position.number.toFloat()
+        val estimation = currentItem.getEstimation()
         holder.estimationValue.text = holder.itemView.context.getString(R.string.euro_format, estimation)
 
         // Set the buy price
         holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.position.buy)
 
         // Calculate and set the +/- value (current estimation - buy price)
-        val plusMinusValue = estimation - currentItem.position.buy
+        val plusMinusValue = currentItem.getPlusMinusValue()
         holder.plusMinusValue.text = holder.itemView.context.getString(R.string.euro_format, plusMinusValue)
 
-        val plusMinusPercentage = plusMinusValue / estimation * 100
+        val plusMinusPercentage = currentItem.getPlusMinusValueAsPercentage()
         holder.plusMinusPercentage.text = holder.itemView.context.getString(R.string.percentage_format, plusMinusPercentage)
 
 
@@ -71,6 +71,6 @@ class PositionAdapter(
 
 
     override fun getItemCount(): Int {
-        return positions.size
+        return evaluatedPositions.size
     }
 }

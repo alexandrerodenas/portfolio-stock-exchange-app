@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 class EvaluatedPosition(
     val position: Position,
     val currentPrice: Double
-): Parcelable {
+) : Parcelable {
 
     fun getStockName(): String {
         return this.position.getStockName()
@@ -19,8 +19,21 @@ class EvaluatedPosition(
         return this.position.getStockSymbol()
     }
 
-    fun isForeign(): Boolean{
+    fun isForeign(): Boolean {
         return this.position.isForeign()
+    }
+
+    fun getEstimation(): Double {
+        return this.currentPrice * this.position.number.toFloat()
+    }
+
+    fun getPlusMinusValue(): Double {
+        return this.getEstimation() - this.position.buy
+    }
+
+    fun getPlusMinusValueAsPercentage(): Double {
+        return this.getPlusMinusValue() / this.getEstimation() * 100
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Open Positions Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/openPositionsButton"
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Chart CardView -->
     <androidx.cardview.widget.CardView
         android:id="@+id/chartCardView"
         android:layout_width="0dp"
@@ -27,7 +29,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomLinearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/topFlopCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/openPositionsButton">
@@ -39,6 +41,28 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Top Flop CardView -->
+    <LinearLayout
+        android:id="@+id/topFlopCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/chartCardView"
+        app:layout_constraintBottom_toTopOf="@id/bottomLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/topFlopFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!-- Bottom Linear Layout -->
     <LinearLayout
         android:id="@+id/bottomLinearLayout"
         android:layout_width="match_parent"
@@ -46,7 +70,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:baselineAligned="false"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
