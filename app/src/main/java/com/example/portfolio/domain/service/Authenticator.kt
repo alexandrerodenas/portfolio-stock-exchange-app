@@ -1,4 +1,4 @@
-package com.example.portfolio.domain
+package com.example.portfolio.domain.service
 
 interface Authenticator {
     fun authenticate()

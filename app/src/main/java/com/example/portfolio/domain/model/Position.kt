@@ -1,4 +1,4 @@
-package com.example.portfolio.domain
+package com.example.portfolio.domain.model
 
 import android.os.Build
 import android.os.Parcelable
@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Parcelize
 class Position(
-    val stockLegacy: StockLegacy,
+    val stock: Stock,
     val number: Int,
     val buy: Double,
     val date: LocalDateTime
@@ -16,15 +16,15 @@ class Position(
 
 
     fun getStockName(): String {
-        return this.stockLegacy.name
+        return this.stock.name
     }
 
     fun getStockSymbol(): String {
-        return this.stockLegacy.symbol
+        return this.stock.symbol
     }
 
     fun isForeign(): Boolean{
-        return this.stockLegacy.isForeign
+        return this.stock.isForeign
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +33,7 @@ class Position(
         val combinedBuy = (this.buy + other.buy)
         val latestDate = if (this.date.isAfter(other.date)) this.date else other.date
 
-        return Position(stockLegacy, combinedNumber, combinedBuy, latestDate)
+        return Position(stock, combinedNumber, combinedBuy, latestDate)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -42,7 +42,7 @@ class Position(
 
         other as Position
 
-        if (stockLegacy != other.stockLegacy) return false
+        if (stock != other.stock) return false
         if (number != other.number) return false
         if (buy != other.buy) return false
         if (date != other.date) return false
@@ -51,7 +51,7 @@ class Position(
     }
 
     override fun hashCode(): Int {
-        var result = stockLegacy.hashCode()
+        var result = stock.hashCode()
         result = 31 * result + number.hashCode()
         result = 31 * result + buy.hashCode()
         result = 31 * result + date.hashCode()

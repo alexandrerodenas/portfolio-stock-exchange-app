@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import java.util.concurrent.Executor
 import androidx.biometric.BiometricPrompt
-import com.example.portfolio.domain.Authenticator
+import com.example.portfolio.domain.service.Authenticator
 
 class BiometricAuthenticator(
     private val context: Context,

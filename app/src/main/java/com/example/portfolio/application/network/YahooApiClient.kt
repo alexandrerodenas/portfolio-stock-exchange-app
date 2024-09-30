@@ -1,6 +1,6 @@
 package com.example.portfolio.application.network
 
-import com.example.portfolio.domain.StockApiClient
+import com.example.portfolio.domain.service.StockApiClient
 import com.github.mikephil.charting.data.Entry
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

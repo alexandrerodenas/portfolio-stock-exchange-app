@@ -1,5 +1,6 @@
 package com.example.portfolio
 
+import PortfolioServiceImpl
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,16 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.biometric.AuthenticatorFactory
 import com.example.portfolio.application.network.YahooApiClient
-import com.example.portfolio.application.portfolio.StaticPortfolioRepositoryImpl
 import com.example.portfolio.database.DataDatabase
-import com.example.portfolio.domain.Authenticator
-import com.example.portfolio.domain.EvaluatedPosition
-import com.example.portfolio.domain.Portfolio
-import com.example.portfolio.domain.StockApiClient
+import com.example.portfolio.domain.model.EvaluatedPosition
+import com.example.portfolio.domain.model.Portfolio
+import com.example.portfolio.domain.service.Authenticator
+import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.example.portfolio.ui.activity.fragment.GlobalPlusMinusValueFragment
 import com.github.mikephil.charting.data.Entry
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -32,26 +34,31 @@ class MainActivity : AppCompatActivity() {
         "fr".setLocale()
         setContentView(R.layout.activity_main)
 
-        val portfolioRepository = StaticPortfolioRepositoryImpl.createFromResources(this)
         val stockApiClient: StockApiClient = YahooApiClient()
-        val authenticator: Authenticator = AuthenticatorFactory().provide(this) {
-            var portfolio: Portfolio? = null
-            val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
 
-            var positions: List<EvaluatedPosition> = emptyList()
+        val authenticator: Authenticator = AuthenticatorFactory().provide(this) {
+            var evaluatedPositions: List<EvaluatedPosition> = emptyList()
+            val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
 
             db = DataDatabase.getInstance(this)
 
-            lifecycleScope.launch {
-                portfolio = portfolioRepository.getPortfolio()
-                db.stockDao().getAll().collect { stocks ->
-                    if (portfolio != null) {
-                        injectGlobalPlusMinusValue(portfolio!!)
-                        positions = portfolio!!.evaluatedPositions
+            val portfolioService = PortfolioServiceImpl(
+                positionDao = db.positionDao(),
+                stockDao = db.stockDao(),
+                stockApiClient = stockApiClient
+            )
 
-                        if (stocks.isNotEmpty()) {
+            lifecycleScope.launch {
+                portfolioService.getPortfolio()
+                    .filter { portfolio -> portfolio.evaluatedPositions.isNotEmpty() }
+                    .first()
+                    .let { portfolio ->
+                        injectGlobalPlusMinusValue(portfolio)
+                        evaluatedPositions = portfolio.evaluatedPositions
+
+                        db.stockDao().getAll().collect { stocks ->
                             val cac40Stock = stocks.find { it.name == "CAC40" }
-                            if(cac40Stock == null){
+                            if (cac40Stock == null) {
                                 Toast.makeText(
                                     this@MainActivity,
                                     "Failed to load CAC 40",
@@ -64,24 +71,16 @@ class MainActivity : AppCompatActivity() {
                                 )
                             }
                         }
-                    } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Failed to load portfolio",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
-                }
-
-
             }
 
             openPositionsButton.setOnClickListener {
-                if (portfolio != null) {
+
+                if (evaluatedPositions.isNotEmpty()) {
                     val intent = Intent(this, PositionsActivity::class.java).apply {
                         putParcelableArrayListExtra(
                             "evaluatedPositions",
-                            ArrayList(positions)
+                            ArrayList(evaluatedPositions)
                         )
                     }
                     startActivity(intent)
@@ -94,8 +93,6 @@ class MainActivity : AppCompatActivity() {
         if (authenticator.isAvailable()) {
             authenticator.authenticate()
         }
-
-
     }
 
     private fun injectChartFragment(chartData: List<Entry>, chartTitle: String) {

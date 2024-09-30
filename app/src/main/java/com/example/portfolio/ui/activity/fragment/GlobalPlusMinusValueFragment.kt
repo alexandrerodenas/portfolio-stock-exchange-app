@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.portfolio.R
-import com.example.portfolio.domain.Portfolio
+import com.example.portfolio.domain.model.Portfolio
 
 class GlobalPlusMinusValueFragment : Fragment(R.layout.fragment_global_plus_minus_value) {
 

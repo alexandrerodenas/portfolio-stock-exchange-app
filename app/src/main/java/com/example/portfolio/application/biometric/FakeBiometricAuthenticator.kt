@@ -2,7 +2,7 @@ package com.example.portfolio.application.biometric
 
 import android.content.Context
 import android.widget.Toast
-import com.example.portfolio.domain.Authenticator
+import com.example.portfolio.domain.service.Authenticator
 
 class FakeBiometricAuthenticator(
     private val context: Context,

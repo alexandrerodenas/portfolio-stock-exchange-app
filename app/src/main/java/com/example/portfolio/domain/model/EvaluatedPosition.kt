@@ -1,6 +1,8 @@
-package com.example.portfolio.domain
+package com.example.portfolio.domain.model
 
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -19,6 +21,12 @@ class EvaluatedPosition(
 
     fun isForeign(): Boolean{
         return this.position.isForeign()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun combineWith(other: EvaluatedPosition): EvaluatedPosition {
+        val position = other.position.combineWith(position)
+        return EvaluatedPosition(position, currentPrice)
     }
 
     override fun equals(other: Any?): Boolean {

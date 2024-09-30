@@ -2,7 +2,7 @@ package com.example.portfolio.application.biometric
 
 import android.content.Context
 import com.example.portfolio.BuildConfig
-import com.example.portfolio.domain.Authenticator
+import com.example.portfolio.domain.service.Authenticator
 
 class AuthenticatorFactory {
 
