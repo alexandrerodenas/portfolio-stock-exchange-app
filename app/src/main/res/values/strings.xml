@@ -17,5 +17,6 @@
     <string name="pending_plus_minus_value">+/- value latente</string>
     <string name="top_3_stocks">Top 3</string>
     <string name="flop_3_stocks">Flop 3</string>
+    <string name="arrow_description">voir graphique sur la journée</string>
 
 </resources>

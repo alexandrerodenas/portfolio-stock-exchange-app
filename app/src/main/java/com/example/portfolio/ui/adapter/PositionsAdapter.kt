@@ -3,6 +3,7 @@ package com.example.portfolio.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
@@ -21,6 +22,7 @@ class PositionAdapter(
         val buyPriceValue: TextView = itemView.findViewById(R.id.buyPriceValue)
         val plusMinusValue: TextView = itemView.findViewById(R.id.plusMinusValue)
         val plusMinusPercentage: TextView = itemView.findViewById(R.id.plusMinusPercentage)
+        val showChartIcon: ImageView = itemView.findViewById(R.id.showChartIcon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionViewHolder {
@@ -64,7 +66,7 @@ class PositionAdapter(
             holder.plusMinusPercentage.setTextColor(holder.itemView.context.getColor(android.R.color.holo_red_dark))
         }
 
-        holder.itemView.setOnClickListener {
+        holder.showChartIcon.setOnClickListener {
             onItemClicked(currentItem)
         }
     }

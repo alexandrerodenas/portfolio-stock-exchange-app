@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.biometric.AuthenticatorFactory
 import com.example.portfolio.application.network.YahooApiClient
-import com.example.portfolio.database.DataDatabase
+import com.example.portfolio.database.AppDatabase
 import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.Authenticator
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var db: DataDatabase
+    private lateinit var db: AppDatabase
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             var evaluatedPositions: List<EvaluatedPosition> = emptyList()
             val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
 
-            db = DataDatabase.getInstance(this)
+            db = AppDatabase.getInstance(this)
 
             val portfolioService = PortfolioServiceImpl(
                 positionDao = db.positionDao(),

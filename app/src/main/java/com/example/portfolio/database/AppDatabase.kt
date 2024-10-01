@@ -19,7 +19,7 @@ import java.util.concurrent.Executors
 
 @TypeConverters(DateConverter::class)
 @Database(entities = [StockDB::class, PositionDB::class], version = 1)
-abstract class DataDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun stockDao(): StockDao
     abstract fun positionDao(): PositionDao
 
@@ -27,14 +27,14 @@ abstract class DataDatabase : RoomDatabase() {
     companion object {
 
         @Volatile
-        private var INSTANCE: DataDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): DataDatabase = INSTANCE ?: synchronized(this) {
+        fun getInstance(context: Context): AppDatabase = INSTANCE ?: synchronized(this) {
             INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
         }
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext, DataDatabase::class.java, "stock.db",
+            context.applicationContext, AppDatabase::class.java, "stock.db",
         ).addCallback(object : Callback() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onCreate(db: SupportSQLiteDatabase) {
