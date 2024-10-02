@@ -12,6 +12,9 @@ interface StockDao {
     @Query("SELECT * FROM stocks")
     fun getAll(): Flow<List<StockDB>>
 
+    @Query("SELECT * FROM stocks WHERE not isIndex")
+    fun getAllButIndex(): Flow<List<StockDB>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(stocks: List<StockDB>)
 

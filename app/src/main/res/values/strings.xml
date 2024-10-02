@@ -18,5 +18,14 @@
     <string name="top_3_stocks">Top 3</string>
     <string name="flop_3_stocks">Flop 3</string>
     <string name="arrow_description">voir graphique sur la journée</string>
+    <string name="create_new_stock">ajouter un élément</string>
+    <string name="stock_symbol">SAN.PA</string>
+    <string name="number_of_shares">10</string>
+    <string name="buy_price">100.0</string>
+    <string name="date">yyyy-MM-dd HH:mm:ss</string>
+    <string name="add_position">Ajouter la position</string>
+    <string name="error_input_invalid">Formulaire invalide</string>
+    <string name="error_date_invalid">Date invalide</string>
+    <string name="position_added">Position ajoutée</string>
 
 </resources>

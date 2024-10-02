@@ -35,12 +35,25 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/foreignPositionsRecyclerView"
-            android:clipToPadding="true"
-            android:nestedScrollingEnabled="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="true"
+            android:nestedScrollingEnabled="false" />
+
+        <ImageButton
+            android:id="@+id/createStockIconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/create_new_stock"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/add" />
 
     </LinearLayout>
+
+
 
 
 </androidx.core.widget.NestedScrollView>

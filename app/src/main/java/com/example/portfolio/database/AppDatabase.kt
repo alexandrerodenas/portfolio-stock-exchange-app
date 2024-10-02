@@ -47,16 +47,17 @@ abstract class AppDatabase : RoomDatabase() {
         }).build()
 
         val STOCKS = listOf(
-            StockDB("^FCHI", "CAC40", false),
-            StockDB("SAN.PA", "Sanofi", false),
-            StockDB("AC.PA", "Accor", false),
-            StockDB("ORA.PA", "Orange", false),
-            StockDB("BNP.PA", "BNP", false),
-            StockDB("STLAP.PA", "Stellantis", true),
-            StockDB("ATO.PA", "Atos", false),
-            StockDB("UBI.PA", "Ubisoft", false),
-            StockDB("RNO.PA", "Renault", false),
-            StockDB("WPEA.PA", "IShares", true)
+            StockDB("^FCHI", "CAC40", isForeign = false, isIndex = true),
+            StockDB("SAN.PA", "Sanofi", isForeign = false, isIndex = false),
+            StockDB("AC.PA", "Accor", isForeign = false, isIndex = false),
+            StockDB("ORA.PA", "Orange", isForeign = false, isIndex = false),
+            StockDB("BNP.PA", "BNP", isForeign = false, isIndex = false),
+            StockDB("STLAP.PA", "Stellantis", isForeign = true, isIndex = false),
+            StockDB("ATO.PA", "Atos", isForeign = false, isIndex = false),
+            StockDB("UBI.PA", "Ubisoft", isForeign = false, isIndex = false),
+            StockDB("RNO.PA", "Renault", isForeign = false, isIndex = false),
+            StockDB("WPEA.PA", "IShares", isForeign = true, isIndex = false),
+            StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false)
         )
 
         @RequiresApi(Build.VERSION_CODES.O)

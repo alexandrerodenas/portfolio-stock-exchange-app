@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class Stock (
     val name: String,
     val symbol: String,
-    val isForeign: Boolean
+    val isForeign: Boolean,
+    val isIndex: Boolean
 ) : Parcelable

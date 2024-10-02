@@ -3,6 +3,8 @@ package com.example.portfolio.ui.activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,8 @@ class PositionsActivity : AppCompatActivity() {
         val localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
         val foreignPositionsRecyclerView =
             findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+
+        val addNewStockButton : ImageButton = findViewById(R.id.createStockIconButton)
 
         val (localPositions, foreignPositions) = (intent.getParcelableArrayListExtra<EvaluatedPosition>(
             "evaluatedPositions"
@@ -62,6 +66,11 @@ class PositionsActivity : AppCompatActivity() {
 
         foreignPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
         foreignPositionsRecyclerView.adapter = createAdapter(foreignPositions)
+
+        addNewStockButton.setOnClickListener {
+            val intent = Intent(this, CreatePositionActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

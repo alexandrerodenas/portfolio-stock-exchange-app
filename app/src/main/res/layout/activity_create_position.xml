@@ -1,0 +1,44 @@
+<!-- res/layout/activity_create_position.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Spinner
+        android:id="@+id/stockSymbolSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:id="@+id/numberOfSharesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="0"
+        android:hint="@string/number_of_shares"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/buyPriceEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="0.0"
+        android:hint="@string/buy_price"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/date"
+        android:inputType="date" />
+
+    <Button
+        android:id="@+id/submitPositionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_position" />
+
+</LinearLayout>
