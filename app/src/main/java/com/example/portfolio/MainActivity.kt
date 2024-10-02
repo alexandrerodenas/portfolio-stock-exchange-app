@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         val stockApiClient: StockApiClient = YahooApiClient()
 
         val authenticator: Authenticator = AuthenticatorFactory().provide(this) {
-            var evaluatedPositions: List<EvaluatedPosition> = emptyList()
             val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
 
             db = AppDatabase.getInstance(this)
@@ -49,13 +48,24 @@ class MainActivity : AppCompatActivity() {
                 stockApiClient = stockApiClient
             )
 
+            openPositionsButton.setOnClickListener {
+                Toast.makeText(this, "Portfolio is still loading", Toast.LENGTH_SHORT).show()
+            }
+
             lifecycleScope.launch {
                 portfolioService.getPortfolio()
                     .filter { portfolio -> portfolio.evaluatedPositions.isNotEmpty() }
                     .first()
                     .let { portfolio ->
                         injectGlobalPlusMinusValue(portfolio)
-                        evaluatedPositions = portfolio.evaluatedPositions
+
+                        openPositionsButton.setOnClickListener {
+                            val intent =
+                                Intent(this@MainActivity, PositionsActivity::class.java).apply {
+                                    putExtra("portfolio", portfolio)
+                                }
+                            startActivity(intent)
+                        }
 
                         db.stockDao().getAll().collect { stocks ->
                             val cac40Stock = stocks.find { it.name == "CAC40" }
@@ -76,20 +86,7 @@ class MainActivity : AppCompatActivity() {
                     }
             }
 
-            openPositionsButton.setOnClickListener {
 
-                if (evaluatedPositions.isNotEmpty()) {
-                    val intent = Intent(this, PositionsActivity::class.java).apply {
-                        putParcelableArrayListExtra(
-                            "evaluatedPositions",
-                            ArrayList(evaluatedPositions)
-                        )
-                    }
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Positions are still loading", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
 
         if (authenticator.isAvailable()) {

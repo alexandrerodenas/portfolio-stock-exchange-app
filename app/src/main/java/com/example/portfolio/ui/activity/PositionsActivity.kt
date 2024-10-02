@@ -14,6 +14,7 @@ import com.example.portfolio.R
 import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.model.EvaluatedPosition
+import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.launch
 
@@ -27,49 +28,53 @@ class PositionsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_positions)
 
         val localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
-        val foreignPositionsRecyclerView =
-            findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+        val foreignPositionsRecyclerView = findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+        val addNewStockButton: ImageButton = findViewById(R.id.createStockIconButton)
 
-        val addNewStockButton : ImageButton = findViewById(R.id.createStockIconButton)
+        val portfolio = intent.getParcelableExtra<Portfolio>("portfolio")
 
-        val (localPositions, foreignPositions) = (intent.getParcelableArrayListExtra<EvaluatedPosition>(
-            "evaluatedPositions"
-        ) ?: listOf()).partition { !it.isForeign() }
+        if (portfolio != null) {
+            setupRecyclerViews(portfolio, localPositionsRecyclerView, foreignPositionsRecyclerView)
+        } else {
+            lifecycleScope.launch {
+                Toast.makeText(this@PositionsActivity, "Failed to load portfolio data", Toast.LENGTH_SHORT).show()
+            }
+        }
 
+        addNewStockButton.setOnClickListener {
+            val intent = Intent(this, CreatePositionActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setupRecyclerViews(
+        portfolio: Portfolio,
+        localPositionsRecyclerView: RecyclerView,
+        foreignPositionsRecyclerView: RecyclerView
+    ) {
         val createAdapter = { positions: List<EvaluatedPosition> ->
             PositionAdapter(positions) { evaluatedPosition ->
                 lifecycleScope.launch {
                     try {
-                        val chartData =
-                            stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
-                        val intent =
-                            Intent(this@PositionsActivity, ChartActivity::class.java).apply {
-                                putParcelableArrayListExtra("chartData", ArrayList(chartData))
-                                putExtra("chartTitle", evaluatedPosition.getStockName())
-                            }
+                        val chartData = stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
+                        val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
+                            putParcelableArrayListExtra("chartData", ArrayList(chartData))
+                            putExtra("chartTitle", evaluatedPosition.getStockName())
+                        }
                         startActivity(intent)
                     } catch (e: Exception) {
-                        Toast.makeText(
-                            this@PositionsActivity,
-                            "Failed to load chart data",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@PositionsActivity, "Failed to load chart data", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
         localPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
-        localPositionsRecyclerView.adapter = createAdapter(localPositions)
+        localPositionsRecyclerView.adapter = createAdapter(portfolio.getLocalPositions())
         localPositionsRecyclerView.setHasFixedSize(true)
 
         foreignPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
-        foreignPositionsRecyclerView.adapter = createAdapter(foreignPositions)
-
-        addNewStockButton.setOnClickListener {
-            val intent = Intent(this, CreatePositionActivity::class.java)
-            startActivity(intent)
-        }
-
+        foreignPositionsRecyclerView.adapter = createAdapter(portfolio.getForeignPositions())
     }
+
 }

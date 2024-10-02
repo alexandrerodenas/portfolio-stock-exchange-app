@@ -8,6 +8,14 @@ import kotlinx.parcelize.Parcelize
 data class Portfolio(
     val evaluatedPositions: List<EvaluatedPosition>
 ) : Parcelable {
+    fun getLocalPositions(): List<EvaluatedPosition>{
+        return this.evaluatedPositions.filter { !it.isForeign() }
+    }
+
+    fun getForeignPositions(): List<EvaluatedPosition>{
+        return this.evaluatedPositions.filter { it.isForeign() }
+    }
+
     fun getTotalEstimation(): Double {
         return this.evaluatedPositions.sumOf {
             evaluatedPosition: EvaluatedPosition -> evaluatedPosition.currentPrice * evaluatedPosition.position.number
