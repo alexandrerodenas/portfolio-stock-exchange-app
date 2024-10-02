@@ -54,7 +54,7 @@ class TopFlopFragment : Fragment(R.layout.fragment_top_flop) {
             val stockNameTextView = stockView.findViewById<TextView>(R.id.stockNameTextView)
             val stockPercentageTextView = stockView.findViewById<TextView>(R.id.stockPercentageTextView)
 
-            stockNameTextView.text = stock.position.stock.name
+            stockNameTextView.text = stock.getStockName()
             stockPercentageTextView.text = view.context.getString(R.string.percentage_format, stock.getPlusMinusValueAsPercentage())
 
             stockPercentageTextView.setTextColor(if (stock.getPlusMinusValueAsPercentage() >= 0) {
@@ -71,7 +71,7 @@ class TopFlopFragment : Fragment(R.layout.fragment_top_flop) {
             val stockNameTextView = stockView.findViewById<TextView>(R.id.stockNameTextView)
             val stockPercentageTextView = stockView.findViewById<TextView>(R.id.stockPercentageTextView)
 
-            stockNameTextView.text = stock.position.stock.name // Assuming stock.position.stock.name gives you the stock name
+            stockNameTextView.text = stock.getStockName()
             stockPercentageTextView.text = view.context.getString(R.string.percentage_format, stock.getPlusMinusValueAsPercentage())
             stockPercentageTextView.setTextColor(if (stock.getPlusMinusValueAsPercentage() >= 0) {
                 requireContext().getColor(android.R.color.holo_green_dark)

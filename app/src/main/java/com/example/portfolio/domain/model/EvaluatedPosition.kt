@@ -23,6 +23,10 @@ class EvaluatedPosition(
         return this.position.isForeign()
     }
 
+    fun getPositionCount(): Int {
+        return this.position.number
+    }
+
     fun getEstimation(): Double {
         return this.currentPrice * this.position.number.toFloat()
     }

@@ -6,8 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Portfolio(
-    val evaluatedPositions: List<EvaluatedPosition>
+    private val evaluatedPositions: List<EvaluatedPosition>
 ) : Parcelable {
+
+    fun isNotEmpty(): Boolean {
+        return this.evaluatedPositions.isNotEmpty();
+    }
+
     fun getLocalPositions(): List<EvaluatedPosition>{
         return this.evaluatedPositions.filter { !it.isForeign() }
     }

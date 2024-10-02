@@ -32,29 +32,23 @@ class PositionAdapter(
     }
 
     override fun onBindViewHolder(holder: PositionViewHolder, position: Int) {
-        val currentItem = evaluatedPositions[position]
+        val currentEvaluatedPosition = evaluatedPositions[position]
 
-        // Set the stock title
-        holder.stockTitle.text = currentItem.position.stock.name
+        holder.stockTitle.text = currentEvaluatedPosition.getStockName()
 
-        // Set the course value (current price)
-        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.currentPrice)
+        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.currentPrice)
 
-        // Set the quantity value (number of stocks)
-        holder.quantityValue.text = currentItem.position.number.toString()
+        holder.quantityValue.text = currentEvaluatedPosition.getPositionCount().toString()
 
-        // Set the estimation value (current price * number of stocks)
-        val estimation = currentItem.getEstimation()
+        val estimation = currentEvaluatedPosition.getEstimation()
         holder.estimationValue.text = holder.itemView.context.getString(R.string.euro_format, estimation)
 
-        // Set the buy price
-        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentItem.position.buy)
+        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.position.buy)
 
-        // Calculate and set the +/- value (current estimation - buy price)
-        val plusMinusValue = currentItem.getPlusMinusValue()
+        val plusMinusValue = currentEvaluatedPosition.getPlusMinusValue()
         holder.plusMinusValue.text = holder.itemView.context.getString(R.string.euro_format, plusMinusValue)
 
-        val plusMinusPercentage = currentItem.getPlusMinusValueAsPercentage()
+        val plusMinusPercentage = currentEvaluatedPosition.getPlusMinusValueAsPercentage()
         holder.plusMinusPercentage.text = holder.itemView.context.getString(R.string.percentage_format, plusMinusPercentage)
 
 
@@ -67,7 +61,7 @@ class PositionAdapter(
         }
 
         holder.showChartIcon.setOnClickListener {
-            onItemClicked(currentItem)
+            onItemClicked(currentEvaluatedPosition)
         }
     }
 

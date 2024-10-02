@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 portfolioService.getPortfolio()
-                    .filter { portfolio -> portfolio.evaluatedPositions.isNotEmpty() }
+                    .filter { portfolio -> portfolio.isNotEmpty() }
                     .first()
                     .let { portfolio ->
                         injectGlobalPlusMinusValue(portfolio)
