@@ -29,6 +29,8 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        private val dateConverter: DateConverter = DateConverter()
+
         fun getInstance(context: Context): AppDatabase = INSTANCE ?: synchronized(this) {
             INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
         }
@@ -60,10 +62,6 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false)
         )
 
-        @RequiresApi(Build.VERSION_CODES.O)
-        val formatter: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") // Define your date format
-
 
         @RequiresApi(Build.VERSION_CODES.O)
         val POSITIONS = listOf(
@@ -72,62 +70,62 @@ abstract class AppDatabase : RoomDatabase() {
                 stockSymbol = "ATO.PA",
                 number = 120,
                 buy = 105.98,
-                date = LocalDateTime.of(2024, 8, 6, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 6, 0, 0))
             ), PositionDB(
                 id = 2,
                 stockSymbol = "UBI.PA",
                 number = 10,
                 buy = 200.05,
-                date = LocalDateTime.of(2024, 7, 22, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 22, 0, 0))
             ), PositionDB(
                 id = 3,
                 stockSymbol = "BNP.PA",
                 number = 2,
                 buy = 128.58,
-                date = LocalDateTime.of(2024, 7, 4, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 4, 0, 0))
             ), PositionDB(
                 id = 4,
                 stockSymbol = "RNO.PA",
                 number = 2,
                 buy = 101.91,
-                date = LocalDateTime.of(2024, 7, 4, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 4, 0, 0))
             ), PositionDB(
                 id = 5,
                 stockSymbol = "AC.PA",
                 number = 4,
                 buy = 168.84,
-                date = LocalDateTime.of(2024, 5, 10, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 10, 0, 0))
             ), PositionDB(
                 id = 6,
                 stockSymbol = "ORA.PA",
                 number = 15,
                 buy = 160.93,
-                date = LocalDateTime.of(2024, 5, 10, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 10, 0, 0))
             ), PositionDB(
                 id = 7,
                 stockSymbol = "STLAP.PA",
                 number = 5,
                 buy = 101.08,
-                date = LocalDateTime.of(2024, 5, 6, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 6, 0, 0))
             ), PositionDB(
                 id = 8,
                 stockSymbol = "WPEA.PA",
                 number = 44,
                 buy = 228.82,
-                date = LocalDateTime.of(2024, 8, 16, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 16, 0, 0))
             ), PositionDB(
                 id = 9,
                 stockSymbol = "WPEA.PA",
                 number = 20,
                 buy = 104.26,
-                date = LocalDateTime.of(2024, 7, 22, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 22, 0, 0))
             ),
             PositionDB(
                 id = 10,
                 stockSymbol = "SAN.PA",
                 number = 1,
                 buy = 104.85,
-                date = LocalDateTime.of(2024, 9, 3, 0, 0).format(formatter)
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 9, 3, 0, 0))
             ),
         )
 

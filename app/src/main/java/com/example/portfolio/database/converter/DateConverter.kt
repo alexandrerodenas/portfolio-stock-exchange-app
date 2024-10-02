@@ -6,21 +6,23 @@ import androidx.room.TypeConverter
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+private const val PATTERN = "yyyy-MM-dd HH:mm:ss"
+
 class DateConverter {
     @RequiresApi(Build.VERSION_CODES.O)
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(PATTERN)
 
     @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun fromTimestamp(value: String?): LocalDateTime? {
-        return value?.let {
-            LocalDateTime.parse(it, formatter) // Use the custom formatter
+    fun fromTimestamp(value: String): LocalDateTime {
+        return value.let {
+            LocalDateTime.parse(it, formatter)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun dateToTimestamp(date: LocalDateTime?): String? {
-        return date?.format(formatter) // Use the custom formatter for output
+    fun dateToString(date: LocalDateTime): String {
+        return date.format(formatter)
     }
 }
