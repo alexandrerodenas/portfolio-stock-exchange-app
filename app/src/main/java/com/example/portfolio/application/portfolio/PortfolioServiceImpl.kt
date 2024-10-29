@@ -6,6 +6,7 @@ import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.StockApiClient
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -45,6 +46,7 @@ class PortfolioServiceImpl(
                             )
                         }
                     }
+                    .filter { it.hasAtLeastOneStock() }
                     .sortedBy { it.getStockName() }
             }
             .map { evaluatedPositions ->

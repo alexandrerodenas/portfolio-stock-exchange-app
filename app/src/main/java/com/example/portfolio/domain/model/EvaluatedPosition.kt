@@ -37,7 +37,10 @@ class EvaluatedPosition(
 
     fun getPlusMinusValueAsPercentage(): Double {
         return this.getPlusMinusValue() / this.getEstimation() * 100
+    }
 
+    fun hasAtLeastOneStock(): Boolean {
+        return this.position.number > 0;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
