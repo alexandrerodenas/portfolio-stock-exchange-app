@@ -14,4 +14,10 @@ interface PositionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(positions: List<PositionDB>)
+
+    @Query("DELETE FROM positions WHERE id = :positionId")
+    fun deletePosition(positionId: Int)
+
+    @Query("UPDATE positions SET number = :newQuantity WHERE id = :positionId")
+    fun updatePositionQuantity(positionId: Int, newQuantity: Int)
 }

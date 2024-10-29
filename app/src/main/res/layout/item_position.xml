@@ -31,14 +31,33 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/showChartIcon"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/arrow_description"
-                android:src="@drawable/show_chart" />
+                android:orientation="horizontal">
+
+                <!-- Edit Icon -->
+                <ImageView
+                    android:id="@+id/editIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/edit_description"
+                    android:src="@drawable/edit"
+                    android:paddingEnd="8dp"/>
+
+                <!-- Show Chart Icon -->
+                <ImageView
+                    android:id="@+id/showChartIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/arrow_description"
+                    android:src="@drawable/show_chart"
+                    android:paddingEnd="8dp" />
+
+
+            </LinearLayout>
         </RelativeLayout>
 
         <!-- First Row: Cours, Quantité, and Estimation with "x" and "=" -->

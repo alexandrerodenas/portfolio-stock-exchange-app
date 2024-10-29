@@ -14,7 +14,6 @@ import com.example.portfolio.database.model.StockDB
 import com.example.portfolio.domain.dao.PositionDao
 import com.example.portfolio.domain.dao.StockDao
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.Executors
 
 @TypeConverters(DateConverter::class)
@@ -22,7 +21,6 @@ import java.util.concurrent.Executors
 abstract class AppDatabase : RoomDatabase() {
     abstract fun stockDao(): StockDao
     abstract fun positionDao(): PositionDao
-
 
     companion object {
 
@@ -59,7 +57,8 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("UBI.PA", "Ubisoft", isForeign = false, isIndex = false),
             StockDB("RNO.PA", "Renault", isForeign = false, isIndex = false),
             StockDB("WPEA.PA", "IShares", isForeign = true, isIndex = false),
-            StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false)
+            StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false),
+            StockDB("DG.PA", "Vinci", isForeign = true, isIndex = false)
         )
 
 

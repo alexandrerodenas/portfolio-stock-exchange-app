@@ -1,3 +1,4 @@
+// PositionsActivity.kt
 package com.example.portfolio.ui.activity
 
 import android.content.Intent
@@ -11,10 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
-import com.example.portfolio.domain.service.StockApiClient
-import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
+import com.example.portfolio.domain.service.StockApiClient
+import com.example.portfolio.application.network.YahooApiClient
+import com.example.portfolio.database.AppDatabase
+import com.example.portfolio.ui.activity.fragment.EditQuantityDialogFragment
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.launch
 
@@ -53,20 +56,26 @@ class PositionsActivity : AppCompatActivity() {
         foreignPositionsRecyclerView: RecyclerView
     ) {
         val createAdapter = { positions: List<EvaluatedPosition> ->
-            PositionAdapter(positions) { evaluatedPosition ->
-                lifecycleScope.launch {
-                    try {
-                        val chartData = stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
-                        val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
-                            putParcelableArrayListExtra("chartData", ArrayList(chartData))
-                            putExtra("chartTitle", evaluatedPosition.getStockName())
+            PositionAdapter(
+                positions,
+                onItemClicked = { evaluatedPosition ->
+                    lifecycleScope.launch {
+                        try {
+                            val chartData = stockApiClient.getDailyChartDate(evaluatedPosition.getStockSymbol())
+                            val intent = Intent(this@PositionsActivity, ChartActivity::class.java).apply {
+                                putParcelableArrayListExtra("chartData", ArrayList(chartData))
+                                putExtra("chartTitle", evaluatedPosition.getStockName())
+                            }
+                            startActivity(intent)
+                        } catch (e: Exception) {
+                            Toast.makeText(this@PositionsActivity, "Failed to load chart data", Toast.LENGTH_SHORT).show()
                         }
-                        startActivity(intent)
-                    } catch (e: Exception) {
-                        Toast.makeText(this@PositionsActivity, "Failed to load chart data", Toast.LENGTH_SHORT).show()
                     }
+                },
+                onEditClicked = { evaluatedPosition ->
+                    showEditQuantityPopup(evaluatedPosition)
                 }
-            }
+            )
         }
 
         localPositionsRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -77,4 +86,15 @@ class PositionsActivity : AppCompatActivity() {
         foreignPositionsRecyclerView.adapter = createAdapter(portfolio.getForeignPositions())
     }
 
+    private fun showEditQuantityPopup(evaluatedPosition: EvaluatedPosition) {
+        val initialQuantity = evaluatedPosition.getPositionCount()
+
+        EditQuantityDialogFragment(
+            quantity = initialQuantity,
+            onQuantityUpdated = { newQuantity ->
+                val positionDao = AppDatabase.getInstance(this).positionDao()
+                Toast.makeText(this, "Nombre d'action mis à jour $newQuantity", Toast.LENGTH_SHORT).show()
+            }
+        ).show(supportFragmentManager, "EditQuantityDialog")
+    }
 }

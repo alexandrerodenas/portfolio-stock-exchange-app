@@ -12,7 +12,7 @@
     <string name="plusminusvalue">+/- Value</string>
     <string name="buyprice">Prix achat</string>
     <string name="investment">Investissement</string>
-    <string name="local_values">Mes valeurs locales</string>
+    <string name="local_values">Mes valeurs française</string>
     <string name="foreign_values">Mes valeurs étrangères</string>
     <string name="pending_plus_minus_value">+/- value latente</string>
     <string name="top_3_stocks">Top 3</string>
@@ -27,5 +27,9 @@
     <string name="error_input_invalid">Formulaire invalide</string>
     <string name="error_date_invalid">Date invalide</string>
     <string name="position_added">Position ajoutée</string>
+    <string name="edit_description">editer</string>
+    <string name="decrease_quantity">retirer une action</string>
+    <string name="increase_quantity">augmenter la quantité</string>
+    <string name="change_stock_number">Changer le nombre d\'actions</string>
 
 </resources>
