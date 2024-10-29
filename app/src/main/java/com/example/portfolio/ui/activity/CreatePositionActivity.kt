@@ -1,22 +1,24 @@
 package com.example.portfolio.ui.activity
 
-import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.R
 import com.example.portfolio.database.AppDatabase
-import com.example.portfolio.database.converter.DateConverter
 import com.example.portfolio.database.model.PositionDB
+import com.example.portfolio.ui.utils.DatePickerCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
-import java.util.*
 
 class CreatePositionActivity : AppCompatActivity() {
 
@@ -27,7 +29,6 @@ class CreatePositionActivity : AppCompatActivity() {
     private lateinit var submitPositionButton: Button
 
     private var selectedStockSymbol: String? = null
-    private val dateConverter = DateConverter()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +41,9 @@ class CreatePositionActivity : AppCompatActivity() {
         dateEditText = findViewById(R.id.dateEditText)
         submitPositionButton = findViewById(R.id.submitPositionButton)
 
-        dateEditText.setText(getDateOfNow())
-
+        dateEditText.setText(DatePickerCreator.getDateOfNow())
         dateEditText.setOnClickListener {
-            showDatePickerDialog()
+            DatePickerCreator.create(this) { date -> dateEditText.setText(date.toString()) }
         }
 
         populateStockSpinner()
@@ -117,46 +117,5 @@ class CreatePositionActivity : AppCompatActivity() {
                 finish()
             }
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDateOfNow(): String {
-        val currentDateTime = LocalDateTime.now()
-            .withHour(0)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
-
-        return dateConverter.dateToString(currentDateTime)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = LocalDateTime.of(
-                    selectedYear,
-                    selectedMonth + 1,
-                    selectedDay,
-                    0,
-                    0,
-                    0,
-                    0
-                )
-                dateEditText.setText(
-                    dateConverter.dateToString(selectedDate)
-                )
-            },
-            year,
-            month,
-            day
-        )
-        datePickerDialog.show()
     }
 }

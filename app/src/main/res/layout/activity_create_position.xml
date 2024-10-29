@@ -21,10 +21,9 @@
         android:id="@+id/buyPriceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/buy_price"
+        android:hint="@string/decimal_price"
         android:inputType="numberDecimal" />
 
-    <!-- Remove inputType="date" from here -->
     <EditText
         android:id="@+id/dateEditText"
         android:layout_width="match_parent"

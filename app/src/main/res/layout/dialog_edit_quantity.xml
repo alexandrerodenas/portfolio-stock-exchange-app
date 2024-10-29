@@ -1,47 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- dialog_edit_quantity.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_horizontal">
-
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/change_stock_number"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="16dp" />
+    android:padding="16dp">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Quantity Display -->
+    <TextView
+        android:id="@+id/quantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_marginTop="16dp"
+        android:textSize="18sp" />
+
+    <!-- Button layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/subtractButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/remove"
-            android:contentDescription="@string/decrease_quantity" />
-
-        <TextView
-            android:id="@+id/quantityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:textSize="18sp"
-            android:gravity="center" />
+            android:contentDescription="@string/decrease"
+            android:src="@drawable/remove" />
 
         <ImageView
             android:id="@+id/addButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/add"
-            android:contentDescription="@string/increase_quantity" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/increase"
+            android:src="@drawable/add" />
     </LinearLayout>
+
+    <!-- Selling Price EditText -->
+    <EditText
+        android:id="@+id/sellingPriceEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:inputType="numberDecimal" />
+
+    <!-- Sale Date EditText -->
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:focusable="false" />
 </LinearLayout>

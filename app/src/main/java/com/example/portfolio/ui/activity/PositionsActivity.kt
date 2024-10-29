@@ -16,8 +16,7 @@ import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
-import com.example.portfolio.database.AppDatabase
-import com.example.portfolio.ui.activity.fragment.EditQuantityDialogFragment
+import com.example.portfolio.ui.activity.fragment.SellQuantityDialogFragment
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.launch
 
@@ -89,11 +88,10 @@ class PositionsActivity : AppCompatActivity() {
     private fun showEditQuantityPopup(evaluatedPosition: EvaluatedPosition) {
         val initialQuantity = evaluatedPosition.getPositionCount()
 
-        EditQuantityDialogFragment(
-            quantity = initialQuantity,
-            onQuantityUpdated = { newQuantity ->
-                val positionDao = AppDatabase.getInstance(this).positionDao()
-                Toast.makeText(this, "Nombre d'action mis à jour $newQuantity", Toast.LENGTH_SHORT).show()
+        SellQuantityDialogFragment(
+            maxQuantity = initialQuantity,
+            onSubmit = { sellQuantity, sellPrice, sellDate ->
+                Toast.makeText(this, "Vente de $sellQuantity action(s)", Toast.LENGTH_SHORT).show()
             }
         ).show(supportFragmentManager, "EditQuantityDialog")
     }

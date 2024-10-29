@@ -21,15 +21,17 @@
     <string name="create_new_stock">ajouter un élément</string>
     <string name="stock_symbol">SAN.PA</string>
     <string name="number_of_shares">10</string>
-    <string name="buy_price">100.0</string>
+    <string name="decimal_price">100.0</string>
     <string name="date">yyyy-MM-dd HH:mm:ss</string>
     <string name="add_position">Ajouter la position</string>
     <string name="error_input_invalid">Formulaire invalide</string>
     <string name="error_date_invalid">Date invalide</string>
     <string name="position_added">Position ajoutée</string>
     <string name="edit_description">editer</string>
-    <string name="decrease_quantity">retirer une action</string>
-    <string name="increase_quantity">augmenter la quantité</string>
+    <string name="decrease">retirer</string>
+    <string name="increase">ajouter</string>
     <string name="change_stock_number">Changer le nombre d\'actions</string>
+    <string name="sell_stocks">Vente d\'action</string>
+    <string name="number">Number</string>
 
 </resources>
