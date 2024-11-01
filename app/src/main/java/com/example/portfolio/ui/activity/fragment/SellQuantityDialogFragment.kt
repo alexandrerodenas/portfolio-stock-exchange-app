@@ -14,6 +14,7 @@ import com.example.portfolio.ui.utils.DatePickerCreator
 
 class SellQuantityDialogFragment(
     private val maxQuantity: Int,
+    private val currentPrice: Double,
     private val onSubmit: (Int, Double, String) -> Unit
 ) : DialogFragment() {
 
@@ -29,12 +30,13 @@ class SellQuantityDialogFragment(
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_quantity, null)
 
         quantityTextView = dialogView.findViewById(R.id.quantityTextView)
-        addButton = dialogView.findViewById(R.id.addButton) // Change to addButton
+        addButton = dialogView.findViewById(R.id.addButton)
         subtractButton = dialogView.findViewById(R.id.subtractButton)
         dateEditText = dialogView.findViewById(R.id.dateEditText)
         sellingPriceEditText = dialogView.findViewById(R.id.sellingPriceEditText)
 
         quantityTextView.text = quantity.toString()
+        sellingPriceEditText.setText(currentPrice.toString())
         dateEditText.setText(DatePickerCreator.getDateOfNow())
 
 

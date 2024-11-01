@@ -1,4 +1,3 @@
-<!-- dialog_edit_quantity.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,23 +10,8 @@
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/number"
-            android:textSize="18sp" />
     </LinearLayout>
 
-    <!-- Quantity Display -->
-    <TextView
-        android:id="@+id/quantityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp" />
-
-    <!-- Button layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +25,15 @@
             android:contentDescription="@string/decrease"
             android:src="@drawable/remove" />
 
+        <TextView
+            android:id="@+id/quantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
@@ -49,7 +42,7 @@
             android:src="@drawable/add" />
     </LinearLayout>
 
-    <!-- Selling Price EditText -->
+
     <EditText
         android:id="@+id/sellingPriceEditText"
         android:layout_width="match_parent"
@@ -57,7 +50,6 @@
         android:layout_marginTop="16dp"
         android:inputType="numberDecimal" />
 
-    <!-- Sale Date EditText -->
     <EditText
         android:id="@+id/dateEditText"
         android:layout_width="match_parent"

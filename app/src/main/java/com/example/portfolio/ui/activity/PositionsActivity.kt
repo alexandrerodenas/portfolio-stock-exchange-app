@@ -90,6 +90,7 @@ class PositionsActivity : AppCompatActivity() {
 
         SellQuantityDialogFragment(
             maxQuantity = initialQuantity,
+            currentPrice = evaluatedPosition.position.buy,
             onSubmit = { sellQuantity, sellPrice, sellDate ->
                 Toast.makeText(this, "Vente de $sellQuantity action(s)", Toast.LENGTH_SHORT).show()
             }
