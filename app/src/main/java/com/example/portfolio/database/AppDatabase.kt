@@ -58,7 +58,8 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("RNO.PA", "Renault", isForeign = false, isIndex = false),
             StockDB("WPEA.PA", "IShares", isForeign = true, isIndex = false),
             StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false),
-            StockDB("DG.PA", "Vinci", isForeign = true, isIndex = false)
+            StockDB("DG.PA", "Vinci", isForeign = false, isIndex = false),
+            StockDB("TTE.PA", "Total Energies", isForeign = false, isIndex = false)
         )
 
 
@@ -67,64 +68,16 @@ abstract class AppDatabase : RoomDatabase() {
              PositionDB(
                 id = 1,
                 stockSymbol = "ATO.PA",
-                number = 120,
-                buy = 105.98,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 6, 0, 0))
-            ), PositionDB(
-                id = 2,
-                stockSymbol = "UBI.PA",
                 number = 10,
-                buy = 200.05,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 22, 0, 0))
-            ), PositionDB(
-                id = 3,
-                stockSymbol = "BNP.PA",
-                number = 2,
-                buy = 128.58,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 4, 0, 0))
-            ), PositionDB(
-                id = 4,
-                stockSymbol = "RNO.PA",
-                number = 2,
-                buy = 101.91,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 4, 0, 0))
-            ), PositionDB(
-                id = 5,
-                stockSymbol = "AC.PA",
-                number = 4,
-                buy = 168.84,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 10, 0, 0))
-            ), PositionDB(
-                id = 6,
-                stockSymbol = "ORA.PA",
-                number = 15,
-                buy = 160.93,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 10, 0, 0))
-            ), PositionDB(
-                id = 7,
-                stockSymbol = "STLAP.PA",
-                number = 5,
-                buy = 101.08,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 5, 6, 0, 0))
-            ), PositionDB(
-                id = 8,
-                stockSymbol = "WPEA.PA",
-                number = 44,
-                buy = 228.82,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 16, 0, 0))
-            ), PositionDB(
-                id = 9,
-                stockSymbol = "WPEA.PA",
-                number = 20,
-                buy = 104.26,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 7, 22, 0, 0))
+                buy = 10.0,
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 6, 0, 0))
             ),
             PositionDB(
-                id = 10,
-                stockSymbol = "SAN.PA",
+                id = 2,
+                stockSymbol = "ATO.PA",
                 number = 1,
-                buy = 104.85,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 9, 3, 0, 0))
+                buy = 12.0,
+                date = dateConverter.dateToString(LocalDateTime.of(2024, 9, 6, 0, 0))
             ),
         )
 

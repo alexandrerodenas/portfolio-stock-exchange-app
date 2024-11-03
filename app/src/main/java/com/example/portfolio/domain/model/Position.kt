@@ -30,7 +30,7 @@ class Position(
     @RequiresApi(Build.VERSION_CODES.O)
     fun combineWith(other: Position): Position {
         val combinedNumber = (this.number + other.number)
-        val combinedBuy = (this.buy + other.buy)
+        val combinedBuy = (this.buy * this.number + other.buy * other.number) / combinedNumber
         val latestDate = if (this.date.isAfter(other.date)) this.date else other.date
 
         return Position(stock, combinedNumber, combinedBuy, latestDate)

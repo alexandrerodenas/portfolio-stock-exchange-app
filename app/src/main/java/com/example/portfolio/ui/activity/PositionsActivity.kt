@@ -1,6 +1,6 @@
-// PositionsActivity.kt
 package com.example.portfolio.ui.activity
 
+import PortfolioServiceImpl
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -16,21 +16,31 @@ import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
+import com.example.portfolio.database.AppDatabase
+import com.example.portfolio.database.converter.DateConverter
+import com.example.portfolio.database.model.PositionDB
+import com.example.portfolio.domain.model.Position
 import com.example.portfolio.ui.activity.fragment.SellQuantityDialogFragment
 import com.example.portfolio.ui.adapter.PositionAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class PositionsActivity : AppCompatActivity() {
 
     private val stockApiClient: StockApiClient = YahooApiClient()
+    private lateinit var db: AppDatabase
+    private lateinit var localPositionsRecyclerView: RecyclerView
+    private lateinit var foreignPositionsRecyclerView: RecyclerView
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
+        localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
+        foreignPositionsRecyclerView = findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
 
-        val localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
-        val foreignPositionsRecyclerView = findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+
         val addNewStockButton: ImageButton = findViewById(R.id.createStockIconButton)
 
         val portfolio = intent.getParcelableExtra<Portfolio>("portfolio")
@@ -49,6 +59,7 @@ class PositionsActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupRecyclerViews(
         portfolio: Portfolio,
         localPositionsRecyclerView: RecyclerView,
@@ -85,14 +96,29 @@ class PositionsActivity : AppCompatActivity() {
         foreignPositionsRecyclerView.adapter = createAdapter(portfolio.getForeignPositions())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showEditQuantityPopup(evaluatedPosition: EvaluatedPosition) {
-        val initialQuantity = evaluatedPosition.getPositionCount()
+        db = AppDatabase.getInstance(this)
+        val portfolioServiceImpl = PortfolioServiceImpl(
+            db.positionDao(),
+            db.stockDao(),
+            stockApiClient
+        )
 
         SellQuantityDialogFragment(
-            maxQuantity = initialQuantity,
-            currentPrice = evaluatedPosition.position.buy,
-            onSubmit = { sellQuantity, sellPrice, sellDate ->
-                Toast.makeText(this, "Vente de $sellQuantity action(s)", Toast.LENGTH_SHORT).show()
+            positionToSell = evaluatedPosition.position,
+            onSubmit = { sellStockName, sellQuantity, sellPrice, sellDate ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val positionToInsert = PositionDB(0, sellStockName, -sellQuantity, -sellPrice, sellDate)
+                    db.positionDao().insert(listOf(positionToInsert))
+                    portfolioServiceImpl.getPortfolio().first().let { updatedPortfolio ->
+                        launch(Dispatchers.Main) {
+                            setupRecyclerViews(updatedPortfolio, localPositionsRecyclerView, foreignPositionsRecyclerView)
+                            Toast.makeText(this@PositionsActivity, "Vente de $sellQuantity action(s)", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
             }
         ).show(supportFragmentManager, "EditQuantityDialog")
     }

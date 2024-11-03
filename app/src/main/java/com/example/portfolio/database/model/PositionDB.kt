@@ -32,7 +32,7 @@ data class PositionDB(
         return Position(
             stock = stockDB.mapToDomain(),
             buy = buy,
-            date = DateConverter().fromTimestamp(this.date) ?: throw IllegalArgumentException("Invalid date format"),
+            date = DateConverter().stringToDate(this.date),
             number = this.number
         )
     }

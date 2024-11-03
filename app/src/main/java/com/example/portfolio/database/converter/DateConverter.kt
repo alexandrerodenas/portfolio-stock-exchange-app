@@ -14,7 +14,7 @@ class DateConverter {
 
     @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
-    fun fromTimestamp(value: String): LocalDateTime {
+    fun stringToDate(value: String): LocalDateTime {
         return value.let {
             LocalDateTime.parse(it, formatter)
         }

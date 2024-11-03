@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/edit_description"
-                    android:src="@drawable/edit"
+                    android:src="@drawable/sell"
                     android:paddingEnd="8dp"/>
 
                 <!-- Show Chart Icon -->
