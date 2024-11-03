@@ -1,12 +1,14 @@
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.portfolio.database.converter.DateConverter
+import com.example.portfolio.database.model.PositionDB
 import com.example.portfolio.domain.dao.PositionDao
 import com.example.portfolio.domain.dao.StockDao
 import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
+import com.example.portfolio.domain.model.Position
 import com.example.portfolio.domain.service.StockApiClient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -23,34 +25,38 @@ class PortfolioServiceImpl(
     suspend fun getPortfolio(): Flow<Portfolio> {
         return positionDao.getAll()
             .map { positions ->
-                positions.map { positionDB ->
-                    stockDao.getFromSymbol(positionDB.stockSymbol)
-                        .map { stockDB ->
-                            if (stockDB == null) {
-                                throw StockNotFoundException(positionDB.stockSymbol)
-                            } else {
-                                val currentPrice =
-                                    stockApiClient.getPriceFromSymbol(positionDB.stockSymbol)
-                                        ?: 0.0
-                                EvaluatedPosition(
-                                    position = positionDB.mapToDomain(stockDB, positionDB.buy),
-                                    currentPrice = currentPrice
-                                )
-                            }
-                        }.first()
-                }.groupBy { it.getStockName() }
-                    .map { (_, evaluatedPositions) ->
-                        evaluatedPositions.reduce { acc, evaluatedPosition ->
-                            acc.combineWith(
-                                evaluatedPosition
-                            )
-                        }
-                    }
-                    .filter { it.hasAtLeastOneStock() }
+                positions.groupBy { it.stockSymbol }
+                    .map { (stockSymbol, groupedPositions) ->
+                        buildingEvaluatedPositions(stockSymbol, groupedPositions)
+                    }.filter { it.hasAtLeastOneStock() }
                     .sortedBy { it.getStockName() }
-            }
-            .map { evaluatedPositions ->
+            }.map { evaluatedPositions ->
                 Portfolio(evaluatedPositions)
             }
     }
+
+    private suspend fun buildingEvaluatedPositions(
+        stockSymbol: String,
+        groupedPositions: List<PositionDB>
+    ) : EvaluatedPosition = stockDao.getFromSymbol(stockSymbol).map { stockDB ->
+        if (stockDB == null) {
+            throw StockNotFoundException(stockSymbol)
+        } else {
+            val currentPrice =
+                stockApiClient.getPriceFromSymbol(stockSymbol)
+                    ?: 0.0
+            val combinedQuantity = groupedPositions.sumOf { it.number }
+            val combinedTotalPrice = groupedPositions.sumOf { it.buy }
+            val lastDate = groupedPositions.last().date // non sense
+            EvaluatedPosition(
+                position = Position(
+                    stockDB.mapToDomain(),
+                    combinedQuantity,
+                    combinedTotalPrice,
+                    DateConverter().stringToDate(lastDate)
+                ),
+                currentPrice = currentPrice
+            )
+        }
+    }.first()
 }
