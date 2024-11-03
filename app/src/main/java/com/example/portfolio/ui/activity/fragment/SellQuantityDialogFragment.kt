@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.example.portfolio.R
-import com.example.portfolio.database.converter.DateConverter
 import com.example.portfolio.domain.model.Position
 import com.example.portfolio.ui.utils.DatePickerCreator
 

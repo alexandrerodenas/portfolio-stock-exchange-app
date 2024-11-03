@@ -17,9 +17,7 @@ import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.StockApiClient
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.database.AppDatabase
-import com.example.portfolio.database.converter.DateConverter
 import com.example.portfolio.database.model.PositionDB
-import com.example.portfolio.domain.model.Position
 import com.example.portfolio.ui.activity.fragment.SellQuantityDialogFragment
 import com.example.portfolio.ui.adapter.PositionAdapter
 import kotlinx.coroutines.Dispatchers

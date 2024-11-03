@@ -75,7 +75,7 @@ class CreatePositionActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             stockDao.getAllButIndex().collect { stockList ->
-                val stocksNames = stockList.map { it.name }
+                val stocksNames = stockList.map { it.name }.sorted()
                 val adapter = ArrayAdapter(
                     this@CreatePositionActivity,
                     android.R.layout.simple_spinner_item,
