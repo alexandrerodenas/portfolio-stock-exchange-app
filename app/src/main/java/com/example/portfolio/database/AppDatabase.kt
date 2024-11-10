@@ -9,11 +9,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.portfolio.database.converter.DateConverter
+import com.example.portfolio.database.converter.PositionConverter
 import com.example.portfolio.database.model.PositionDB
 import com.example.portfolio.database.model.StockDB
 import com.example.portfolio.domain.dao.PositionDao
 import com.example.portfolio.domain.dao.StockDao
-import java.time.LocalDateTime
+import java.io.InputStream
 import java.util.concurrent.Executors
 
 @TypeConverters(DateConverter::class)
@@ -40,8 +41,10 @@ abstract class AppDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 ioThread {
+                    val inputStream: InputStream = context.assets.open("positions.yaml")
+                    val positionsToInsert = PositionConverter.fromYaml(inputStream)
                     getInstance(context).stockDao().insert(STOCKS)
-                    getInstance(context).positionDao().insert(POSITIONS)
+                    getInstance(context).positionDao().insert(positionsToInsert)
                 }
             }
         }).build()
@@ -62,24 +65,6 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("TTE.PA", "Total Energies", isForeign = false, isIndex = false)
         )
 
-
-        @RequiresApi(Build.VERSION_CODES.O)
-        val POSITIONS = listOf(
-             PositionDB(
-                id = 1,
-                stockSymbol = "ATO.PA",
-                number = 10,
-                buy = 10.0,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 8, 6, 0, 0))
-            ),
-            PositionDB(
-                id = 2,
-                stockSymbol = "ATO.PA",
-                number = 1,
-                buy = 12.0,
-                date = dateConverter.dateToString(LocalDateTime.of(2024, 9, 6, 0, 0))
-            ),
-        )
 
         fun ioThread(f: () -> Unit) {
             Executors.newSingleThreadExecutor().execute(f)
