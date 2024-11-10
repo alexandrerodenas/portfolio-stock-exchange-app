@@ -35,6 +35,7 @@ class PortfolioServiceImpl(
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun buildingEvaluatedPositions(
         stockSymbol: String,
         groupedPositions: List<PositionDB>
