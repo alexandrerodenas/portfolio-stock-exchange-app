@@ -9,12 +9,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.portfolio.database.converter.DateConverter
+import com.example.portfolio.database.converter.DividendConverter
 import com.example.portfolio.database.converter.PositionConverter
 import com.example.portfolio.database.model.PositionDB
 import com.example.portfolio.database.model.StockDB
+import com.example.portfolio.domain.dao.DividendDao
 import com.example.portfolio.domain.dao.PositionDao
 import com.example.portfolio.domain.dao.StockDao
-import java.io.InputStream
 import java.util.concurrent.Executors
 
 @TypeConverters(DateConverter::class)
@@ -22,6 +23,7 @@ import java.util.concurrent.Executors
 abstract class AppDatabase : RoomDatabase() {
     abstract fun stockDao(): StockDao
     abstract fun positionDao(): PositionDao
+    abstract fun dividendDao(): DividendDao
 
     companion object {
 
@@ -39,10 +41,15 @@ abstract class AppDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 ioThread {
-                    val inputStream: InputStream = context.assets.open("positions.yaml")
-                    val positionsToInsert = PositionConverter.fromYaml(inputStream)
+                    val positionsToInsert = PositionConverter.fromYaml(
+                        context.assets.open("positions.yaml")
+                    )
+                    val dividendToInsert = DividendConverter.fromYaml(
+                        context.assets.open("dividends.yaml")
+                    )
                     getInstance(context).stockDao().insert(STOCKS)
                     getInstance(context).positionDao().insert(positionsToInsert)
+                    getInstance(context).dividendDao().insert(dividendToInsert)
                 }
             }
         }).build()
