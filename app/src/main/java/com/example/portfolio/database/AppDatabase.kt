@@ -11,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.portfolio.database.converter.DateConverter
 import com.example.portfolio.database.converter.DividendConverter
 import com.example.portfolio.database.converter.PositionConverter
+import com.example.portfolio.database.model.DividendDB
 import com.example.portfolio.database.model.PositionDB
 import com.example.portfolio.database.model.StockDB
 import com.example.portfolio.domain.dao.DividendDao
@@ -19,7 +20,7 @@ import com.example.portfolio.domain.dao.StockDao
 import java.util.concurrent.Executors
 
 @TypeConverters(DateConverter::class)
-@Database(entities = [StockDB::class, PositionDB::class], version = 1)
+@Database(entities = [StockDB::class, PositionDB::class, DividendDB::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun stockDao(): StockDao
     abstract fun positionDao(): PositionDao
@@ -67,7 +68,8 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("WPEA.PA", "IShares", isForeign = true, isIndex = false),
             StockDB("ESE.PA", "BNP S&P500", isForeign = true, isIndex = false),
             StockDB("DG.PA", "Vinci", isForeign = false, isIndex = false),
-            StockDB("TTE.PA", "Total Energies", isForeign = false, isIndex = false)
+            StockDB("TTE.PA", "Total Energies", isForeign = false, isIndex = false),
+            StockDB("TEP.PA", "Teleperformance", isForeign = false, isIndex = false),
         )
 
 

@@ -16,6 +16,7 @@ import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.Authenticator
 import com.example.portfolio.domain.service.StockApiClient
+import com.example.portfolio.ui.activity.DividendsActivity
 import com.example.portfolio.ui.activity.PositionsActivity
 import com.example.portfolio.ui.activity.fragment.ChartFragment
 import com.example.portfolio.ui.activity.fragment.GlobalPlusMinusValueFragment
@@ -38,7 +39,11 @@ class MainActivity : AppCompatActivity() {
         val stockApiClient: StockApiClient = YahooApiClient()
 
         val authenticator: Authenticator = AuthenticatorFactory().provide(this) {
-            val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
+            val openDividendsButton: Button = findViewById(R.id.openDividendsButton)
+            openDividendsButton.setOnClickListener {
+                val intent = Intent(this, DividendsActivity::class.java)
+                startActivity(intent)
+            }
 
             db = AppDatabase.getInstance(this)
 
@@ -48,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 stockApiClient = stockApiClient
             )
 
+            val openPositionsButton: Button = findViewById(R.id.openPositionsButton)
             openPositionsButton.setOnClickListener {
                 Toast.makeText(this, "Portfolio is still loading", Toast.LENGTH_SHORT).show()
             }

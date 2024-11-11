@@ -35,8 +35,8 @@ class PositionsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_positions)
-        localPositionsRecyclerView = findViewById<RecyclerView>(R.id.localPositionsRecyclerView)
-        foreignPositionsRecyclerView = findViewById<RecyclerView>(R.id.foreignPositionsRecyclerView)
+        localPositionsRecyclerView = findViewById(R.id.localPositionsRecyclerView)
+        foreignPositionsRecyclerView = findViewById(R.id.foreignPositionsRecyclerView)
 
 
         val addNewStockButton: ImageButton = findViewById(R.id.createStockIconButton)

@@ -34,5 +34,6 @@
     <string name="sell_stocks">Vente d\'action</string>
     <string name="number">Nombre</string>
     <string name="selling_price">prix de vente</string>
+    <string name="open_dividends">Dividendes</string>
 
 </resources>
