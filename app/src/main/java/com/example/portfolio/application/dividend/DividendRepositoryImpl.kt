@@ -24,7 +24,7 @@ class DividendRepositoryImpl(
                 dividends.groupBy { it.stockSymbol }
                     .map { (stockSymbol, groupedPositions) ->
                         buildingDividends(stockSymbol, groupedPositions)
-                    }.sortedBy { it.stock.name }
+                    }
             }
     }
 

@@ -19,7 +19,7 @@ class DatePickerCreator {
                 .withSecond(0)
                 .withNano(0)
 
-            return DateConverter().dateToString(currentDateTime)
+            return DateConverter().fullDateToString(currentDateTime)
         }
 
         @RequiresApi(Build.VERSION_CODES.O)

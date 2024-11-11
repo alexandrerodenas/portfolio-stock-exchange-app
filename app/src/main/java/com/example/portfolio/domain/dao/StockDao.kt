@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StockDao {
-    @Query("SELECT * FROM stocks")
-    fun getAll(): Flow<List<StockDB>>
+    @Query("SELECT * FROM stocks WHERE name == 'CAC40' LIMIT 1")
+    fun getCAC40(): Flow<StockDB>
 
     @Query("SELECT * FROM stocks WHERE not isIndex")
     fun getAllButIndex(): Flow<List<StockDB>>

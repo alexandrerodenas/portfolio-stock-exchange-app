@@ -1,7 +1,6 @@
 package com.example.portfolio.domain.model
 
 import android.os.Parcelable
-import com.example.portfolio.database.model.PositionDB
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

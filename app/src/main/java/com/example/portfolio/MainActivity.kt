@@ -72,21 +72,12 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
 
-                        db.stockDao().getAll().collect { stocks ->
-                            val cac40Stock = stocks.find { it.name == "CAC40" }
-                            if (cac40Stock == null) {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Failed to load CAC 40",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                injectChartFragment(
-                                    stockApiClient.getBiweeklyChartData(cac40Stock.symbol),
-                                    cac40Stock.name
-                                )
-                                injectTopFlopFragment(portfolio)
-                            }
+                        db.stockDao().getCAC40().collect { cac40Stock ->
+                            injectChartFragment(
+                                stockApiClient.getBiweeklyChartData(cac40Stock.symbol),
+                                cac40Stock.name
+                            )
+                            injectTopFlopFragment(portfolio)
                         }
                     }
             }

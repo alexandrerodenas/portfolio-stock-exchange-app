@@ -65,7 +65,7 @@ class PositionsActivity : AppCompatActivity() {
     ) {
         val createAdapter = { positions: List<EvaluatedPosition> ->
             PositionAdapter(
-                positions,
+                positions.sortedBy { it.getStockName() },
                 onItemClicked = { evaluatedPosition ->
                     lifecycleScope.launch {
                         try {

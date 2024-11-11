@@ -29,7 +29,6 @@ class PortfolioServiceImpl(
                     .map { (stockSymbol, groupedPositions) ->
                         buildingEvaluatedPositions(stockSymbol, groupedPositions)
                     }.filter { it.hasAtLeastOneStock() }
-                    .sortedBy { it.getStockName() }
             }.map { evaluatedPositions ->
                 Portfolio(evaluatedPositions)
             }

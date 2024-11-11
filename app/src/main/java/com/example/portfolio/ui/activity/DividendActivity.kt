@@ -39,7 +39,7 @@ class DividendsActivity : AppCompatActivity() {
             withContext(Dispatchers.IO) {
                 dividendRepositoryImpl.getDividends().collect { dividendsList: List<Dividend> ->
                     withContext(Dispatchers.Main) {
-                        val adapter = DividendsAdapter(dividendsList)
+                        val adapter = DividendsAdapter(dividendsList.sortedBy { it.date })
                         dividendsRecyclerView.adapter = adapter
                     }
                 }

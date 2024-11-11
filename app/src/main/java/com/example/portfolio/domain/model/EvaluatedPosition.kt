@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class EvaluatedPosition(
-    private val position: Position,
+    val position: Position,
     private val currentPrice: Double
 ) : Parcelable {
 
@@ -49,21 +49,4 @@ class EvaluatedPosition(
         return this.position.number > 0;
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as EvaluatedPosition
-
-        if (position != other.position) return false
-        if (currentPrice != other.currentPrice) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = position.hashCode()
-        result = 31 * result + currentPrice.hashCode()
-        return result
-    }
 }
