@@ -23,13 +23,13 @@ data class Portfolio(
 
     fun getTotalEstimation(): Double {
         return this.evaluatedPositions.sumOf {
-            evaluatedPosition: EvaluatedPosition -> evaluatedPosition.currentPrice * evaluatedPosition.position.number
+            evaluatedPosition: EvaluatedPosition -> evaluatedPosition.getEstimation()
         }
     }
 
     fun getTotalInvestment(): Double {
         return this.evaluatedPositions.sumOf {
-                evaluatedPosition: EvaluatedPosition -> evaluatedPosition.position.buy
+                evaluatedPosition: EvaluatedPosition -> evaluatedPosition.getPositionBuy()
         }
     }
 

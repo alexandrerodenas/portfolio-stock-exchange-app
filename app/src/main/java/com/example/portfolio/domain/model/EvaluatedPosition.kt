@@ -1,14 +1,12 @@
 package com.example.portfolio.domain.model
 
-import android.os.Build
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class EvaluatedPosition(
-    val position: Position,
-    val currentPrice: Double
+    private val position: Position,
+    private val currentPrice: Double
 ) : Parcelable {
 
     fun getStockName(): String {
@@ -27,6 +25,14 @@ class EvaluatedPosition(
         return this.position.number
     }
 
+    fun getPositionBuy(): Double {
+        return this.position.buy
+    }
+
+    fun getCurrentPrice(): Double {
+        return this.currentPrice
+    }
+
     fun getEstimation(): Double {
         return this.currentPrice * this.position.number.toFloat()
     }
@@ -41,12 +47,6 @@ class EvaluatedPosition(
 
     fun hasAtLeastOneStock(): Boolean {
         return this.position.number > 0;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun combineWith(other: EvaluatedPosition): EvaluatedPosition {
-        val position = other.position.combineWith(position)
-        return EvaluatedPosition(position, currentPrice)
     }
 
     override fun equals(other: Any?): Boolean {

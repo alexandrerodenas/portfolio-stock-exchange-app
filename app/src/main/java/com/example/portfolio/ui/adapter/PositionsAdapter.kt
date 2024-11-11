@@ -37,10 +37,10 @@ class PositionAdapter(
         val currentEvaluatedPosition = evaluatedPositions[position]
 
         holder.stockTitle.text = currentEvaluatedPosition.getStockName()
-        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.currentPrice)
+        holder.currentPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.getCurrentPrice())
         holder.quantityValue.text = currentEvaluatedPosition.getPositionCount().toString()
         holder.estimationValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.getEstimation())
-        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.position.buy)
+        holder.buyPriceValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.getPositionBuy())
         holder.plusMinusValue.text = holder.itemView.context.getString(R.string.euro_format, currentEvaluatedPosition.getPlusMinusValue())
         holder.plusMinusPercentage.text = holder.itemView.context.getString(R.string.percentage_format, currentEvaluatedPosition.getPlusMinusValueAsPercentage())
 
