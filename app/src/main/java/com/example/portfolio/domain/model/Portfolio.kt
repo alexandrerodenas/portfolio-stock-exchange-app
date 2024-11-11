@@ -9,7 +9,7 @@ data class Portfolio(
 ) : Parcelable {
 
     fun isNotEmpty(): Boolean {
-        return this.evaluatedPositions.isNotEmpty();
+        return this.evaluatedPositions.isNotEmpty()
     }
 
     fun getLocalPositions(): List<EvaluatedPosition>{

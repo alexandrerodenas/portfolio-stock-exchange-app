@@ -24,7 +24,7 @@ class PositionAdapter(
         val plusMinusValue: TextView = itemView.findViewById(R.id.plusMinusValue)
         val plusMinusPercentage: TextView = itemView.findViewById(R.id.plusMinusPercentage)
         val showChartIcon: ImageView = itemView.findViewById(R.id.showChartIcon)
-        val editIcon: ImageView = itemView.findViewById(R.id.editIcon) // Add this icon to XML
+        val editIcon: ImageView = itemView.findViewById(R.id.editIcon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionViewHolder {

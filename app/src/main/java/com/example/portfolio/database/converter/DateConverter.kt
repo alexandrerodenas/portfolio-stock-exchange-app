@@ -30,7 +30,6 @@ class DateConverter {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @TypeConverter
     fun dateToString(date: LocalDateTime): String {
         return date.format(dateFormatter)
     }

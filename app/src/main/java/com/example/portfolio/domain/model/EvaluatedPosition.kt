@@ -46,7 +46,7 @@ class EvaluatedPosition(
     }
 
     fun hasAtLeastOneStock(): Boolean {
-        return this.position.number > 0;
+        return this.position.number > 0
     }
 
 }
