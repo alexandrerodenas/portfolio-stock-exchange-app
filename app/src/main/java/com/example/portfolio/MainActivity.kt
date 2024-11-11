@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.portfolio.application.biometric.AuthenticatorFactory
 import com.example.portfolio.application.network.YahooApiClient
 import com.example.portfolio.database.AppDatabase
-import com.example.portfolio.domain.model.EvaluatedPosition
 import com.example.portfolio.domain.model.Portfolio
 import com.example.portfolio.domain.service.Authenticator
 import com.example.portfolio.domain.service.StockApiClient

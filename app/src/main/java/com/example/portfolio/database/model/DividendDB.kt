@@ -4,9 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.portfolio.database.converter.DateConverter
-import com.example.portfolio.domain.model.Dividend
-import com.example.portfolio.domain.model.Stock
 
 @Entity(
     tableName = "dividends",
