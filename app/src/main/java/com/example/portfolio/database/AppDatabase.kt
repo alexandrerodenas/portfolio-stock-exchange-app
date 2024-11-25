@@ -70,6 +70,7 @@ abstract class AppDatabase : RoomDatabase() {
             StockDB("DG.PA", "Vinci", isForeign = false, isIndex = false),
             StockDB("TTE.PA", "Total Energies", isForeign = false, isIndex = false),
             StockDB("TEP.PA", "Teleperformance", isForeign = false, isIndex = false),
+            StockDB("KER.PA", "Kering", isForeign = false, isIndex = false)
         )
 
 
